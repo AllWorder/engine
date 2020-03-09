@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 #include "DataStorage.hpp"
+#include "Renderer.hpp"
+
+const int SCREEN_Y = 720;
+const int SCREEN_X = 1280;
 
 class TestComponent: public Component
 {
@@ -19,30 +23,57 @@ main()
     DataStorage data;
     GameObject obj1;
     obj1.name = "obj1";
-    GameObject obj2;
-    obj2.name = "obj2";
 
-    if(data.addObject(obj1))
-        std::cout << "Added" << '\n';
-    if(data.addObject(obj1))
-        std::cout << "Added" << '\n'; // Must write, that this element is already aexist in data
+    if(obj1.addComponent<Renderer>())
+    {}
+
+    sf::Texture obj1Texture;
+    //if (!obj1Texture.loadFromFile("resources/opexus.png"))
+    //{
+    //    std::cout << "Loading texture erorr" << "\n";
+    //}
+
+    Renderer* c =  obj1.getComponent<Renderer>();
+    if(c)
+        std::cout << "not NULLPTR" << '\n';
+    else
+        std::cout << "is NULLPTR" << '\n';
     
-    data.getObject("obj1")->name = "Jenya loh";
-    std::cout << data.getObject("obj1")->name << '\n';
     
-
-    std::cout << "#######" << '\n';
-
-    TestComponent comp1;
-    comp1.name = typeid(TestComponent).name();
-
-    if(obj1.addComponent<TestComponent>())
-        std::cout << "Added" << '\n';
-    if(obj1.addComponent<TestComponent>())
-        std::cout << "Added" << '\n'; // Must write, that this element is already aexist in data
+    //obj1.getComponent<Renderer>()->setTexture(&obj1Texture);
+    obj1.getComponent<Renderer>()->loadTexture("resources/opexus.png");
+    obj1.getComponent<Renderer>()->setPosition(300, 400);
+    obj1.getComponent<Renderer>()->setSize(100, 100);
 
 
-    TestComponent* comp2 = obj1.getComponent<TestComponent>();
-    std::cout << "over" << std::endl;
-    std::cout << comp2 -> name;
+    sf::Event event;
+    sf::RenderWindow window(sf::VideoMode(SCREEN_X, SCREEN_Y), "game");
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
+
+    
+    while (window.isOpen())
+    {
+        //PHISICS: 
+
+        //EVENT HANDLER
+
+        while (window.pollEvent(event))
+		{
+		    if (event.type == sf::Event::Closed) 
+                  window.close();
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            window.close();
+
+        //LOGICS:
+
+        //GRAPHICS:
+
+        window.clear();
+        window.draw(obj1.getComponent<Renderer>()->shape);
+        window.display();
+    }
+        
 }
