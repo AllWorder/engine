@@ -25,7 +25,7 @@ class GameObject
         template <typename T>
         bool addComponent();
         template <typename T>
-        void deleteComponent(T);
+        void deleteComponent();
         template <typename T>
         T* getComponent();
 
@@ -60,10 +60,21 @@ bool GameObject::addComponent()
 }
 
 template <typename T>
+void GameObject::deleteComponent()
+{
+  for(Component* c: components)
+    if(c -> name == typeid(T).name())
+    {
+      delete c;
+      return;
+    }  
+}
+
+template <typename T>
 T* GameObject::getComponent()
 {
     for(Component* c: components)
-        if((*c).name == typeid(T).name())
+        if(c -> name == typeid(T).name())
             return static_cast<T*>(c);
 
     return NULL;

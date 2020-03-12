@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include "DataStorage.hpp"
 #include "Renderer.hpp"
 #include "GrManager.h"
@@ -26,21 +27,16 @@ main()
     obj1.name = "obj1";
     GrManager graphicsManager;
 
-    if(obj1.addComponent<Renderer>())
-    {}
-
+    obj1.addComponent<Renderer>();
+    
     sf::Texture obj1Texture;
-    //if (!obj1Texture.loadFromFile("resources/opexus.png"))
-    //{
-    //    std::cout << "Loading texture erorr" << "\n";
-    //}
 
-    Renderer* c =  obj1.getComponent<Renderer>();
+    /*Renderer* c =  obj1.getComponent<Renderer>();
     if(c)
         std::cout << "not NULLPTR" << '\n';
     else
         std::cout << "is NULLPTR" << '\n';
-    
+    */
     data.addObject(obj1);
     (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
     (data.getObject("obj1")) -> getComponent<Renderer>()->setPosition(300, 400);
@@ -54,7 +50,9 @@ main()
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-    
+    //(data.getObject("obj1")) -> deleteComponent<Renderer>();
+
+    std::cout << "before cycle" << '\n';
     while (window.isOpen())
     {
         //PHISICS: 
@@ -76,5 +74,7 @@ main()
 
         graphicsManager.drawAll(&window, &data);
     }
+  data.deleteObject("obj1");
+  std::cout << "cycle closed" << '\n';
         
 }

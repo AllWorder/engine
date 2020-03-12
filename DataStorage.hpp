@@ -8,7 +8,7 @@ class DataStorage
         bool addObject(GameObject& newObject);
         bool deleteObject(std::string name);
         GameObject* getObject(std::string name);
-        std::vector<GameObject>* getAllObjects();
+        std::vector<GameObject*> getAllObjects();
 
     
 
@@ -57,3 +57,23 @@ GameObject* DataStorage::getObject(std::string name)
     return NULL;
     
 }
+
+std::vector<GameObject*> DataStorage::getAllObjects()
+{
+  std::vector<GameObject*> obj;
+  std::map<std::string, GameObject>::iterator i;
+  
+  for (i = objects.begin(); i != objects.end(); std::advance(i, 1)) 
+    obj.push_back(&(i -> second));
+  
+  return obj;
+}
+
+
+
+
+
+
+
+
+
