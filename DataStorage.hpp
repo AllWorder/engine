@@ -10,7 +10,7 @@ class DataStorage
         GameObject* getObject(std::string name);
         std::vector<GameObject>* getAllObjects();
 
-    private:
+    
 
         std::map <std::string, GameObject> objects;
 
@@ -54,6 +54,6 @@ GameObject* DataStorage::getObject(std::string name)
     }
 
     std::cout << "No such object" << '\n';
-    return nullptr;
+    return NULL;
     
 }

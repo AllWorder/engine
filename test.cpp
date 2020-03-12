@@ -2,6 +2,7 @@
 #include <vector>
 #include "DataStorage.hpp"
 #include "Renderer.hpp"
+#include "GrManager.h"
 
 const int SCREEN_Y = 720;
 const int SCREEN_X = 1280;
@@ -23,6 +24,7 @@ main()
     DataStorage data;
     GameObject obj1;
     obj1.name = "obj1";
+    GrManager graphicsManager;
 
     if(obj1.addComponent<Renderer>())
     {}
@@ -39,11 +41,12 @@ main()
     else
         std::cout << "is NULLPTR" << '\n';
     
-    
-    //obj1.getComponent<Renderer>()->setTexture(&obj1Texture);
-    obj1.getComponent<Renderer>()->loadTexture("resources/opexus.png");
-    obj1.getComponent<Renderer>()->setPosition(300, 400);
-    obj1.getComponent<Renderer>()->setSize(100, 100);
+    data.addObject(obj1);
+    (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
+    (data.getObject("obj1")) -> getComponent<Renderer>()->setPosition(300, 400);
+    (data.getObject("obj1")) -> getComponent<Renderer>()->setSize(100, 100);
+
+    //obj1.getComponent<Renderer>()->setSize(100, 100);                               PLEASE, STOP DOING LIKE THIS!!!!
 
 
     sf::Event event;
@@ -71,9 +74,7 @@ main()
 
         //GRAPHICS:
 
-        window.clear();
-        window.draw(obj1.getComponent<Renderer>()->shape);
-        window.display();
+        graphicsManager.drawAll(&window, &data);
     }
         
 }

@@ -47,7 +47,7 @@ bool GameObject::addComponent()
 {
     for(Component* c: components)
     {
-        if(c->name == typeid(T).name())
+        if(c -> name == typeid(T).name())
         {
             std::cout << "This component is already adeed" << '\n';
             return false;
@@ -63,8 +63,8 @@ template <typename T>
 T* GameObject::getComponent()
 {
     for(Component* c: components)
-        if(c->name == typeid(T).name())
+        if((*c).name == typeid(T).name())
             return static_cast<T*>(c);
 
-    return nullptr;
+    return NULL;
 }
