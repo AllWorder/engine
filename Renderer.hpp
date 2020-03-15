@@ -6,9 +6,6 @@ class Renderer: public Component
 
         bool isVisible = true;
 
-        int x = 0;
-        int y = 0;
-
         int xSize = 50;
         int ySize = 50;
 
@@ -16,7 +13,7 @@ class Renderer: public Component
         sf::Texture texture;
 
         void setSize(int xLen, int yLen);
-        void setPosition(int newX, int newY);
+        void updatePosition();
         void setTexture(sf::Texture* newTexture);
         void loadTexture(std::string imagePath); // loads and automathicaly set it
 
@@ -36,11 +33,9 @@ void Renderer::setSize(int xLen, int yLen)
     shape.setSize(sf::Vector2f(xSize, ySize));
 }
 
-void Renderer::setPosition(int newX, int newY)
+void Renderer::updatePosition()
 {
-    x = newX;
-    y = newY;
-    shape.setPosition(x, y);
+    shape.setPosition(objPointer->x - xSize / 2, objPointer->y - ySize / 2);
 }
 
 void Renderer::setTexture(sf::Texture* newTexture)

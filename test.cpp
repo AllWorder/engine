@@ -23,26 +23,18 @@ main()
 {
     
     DataStorage data;
-    GameObject obj1;
-    obj1.name = "obj1";
+    //GameObject obj1;
+    //obj1.name = "obj1";
     GrManager graphicsManager;
 
-    obj1.addComponent<Renderer>();
-    
-    sf::Texture obj1Texture;
 
-    /*Renderer* c =  obj1.getComponent<Renderer>();
-    if(c)
-        std::cout << "not NULLPTR" << '\n';
-    else
-        std::cout << "is NULLPTR" << '\n';
-    */
-    data.addObject(obj1);
+
+    data.createObjectInStorage("obj1"); //?
+    (data.getObject("obj1")) -> addComponent<Renderer>();
+
     (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
-    (data.getObject("obj1")) -> getComponent<Renderer>()->setPosition(300, 400);
     (data.getObject("obj1")) -> getComponent<Renderer>()->setSize(100, 100);
 
-    //obj1.getComponent<Renderer>()->setSize(100, 100);                               PLEASE, STOP DOING LIKE THIS!!!!
 
 
     sf::Event event;
@@ -50,12 +42,20 @@ main()
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-    //(data.getObject("obj1")) -> deleteComponent<Renderer>();
+    int newX = 0;
+    int newY = 0;
 
-    std::cout << "before cycle" << '\n';
     while (window.isOpen())
     {
         //PHISICS: 
+
+        
+        (data.getObject("obj1")) -> x = newX;
+        (data.getObject("obj1")) -> y = newY;
+
+        newX = newX + 1;    
+        newY += 1;
+
 
         //EVENT HANDLER
 
@@ -74,7 +74,6 @@ main()
 
         graphicsManager.drawAll(&window, &data);
     }
-  data.deleteObject("obj1");
-  std::cout << "cycle closed" << '\n';
-        
+
+  data.deleteObject("obj1");       
 }

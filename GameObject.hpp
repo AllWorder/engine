@@ -1,10 +1,13 @@
 #include <typeinfo>
 
+class GameObject;
+
 class Component
 {
     public:
 
         std::string name;
+        GameObject* objPointer;
 
         virtual ~Component()
         {           
@@ -24,10 +27,16 @@ class GameObject
 
         template <typename T>
         bool addComponent();
+
         template <typename T>
         void deleteComponent();
+
         template <typename T>
         T* getComponent();
+
+
+        int x = 0;
+        int y = 0;
 
         ~GameObject()
         {
@@ -53,9 +62,10 @@ bool GameObject::addComponent()
             return false;
         }
     }
-    T* obj = new T;
-    //obj -> name = comp.name;
-    components.push_back(obj);
+    T* comp = new T;
+    comp->objPointer = this; // pointer to self-object
+    components.push_back(comp);
+
     return true;
 }
 
