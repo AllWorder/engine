@@ -1,25 +1,4 @@
-#include <map>
-#include "GameObject.hpp"
 
-class DataStorage
-{
-    public:
-
-        bool addObject(GameObject& newObject);
-
-        bool deleteObject(std::string name);
-
-        GameObject* getObject(std::string name);
-
-        std::vector<GameObject*> getAllObjects();
-
-        bool createObjectInStorage(std::string name);
-
-    
-
-        std::map <std::string, GameObject> objects;
-
-};
 
 bool DataStorage::addObject(GameObject& newObject)
 {
@@ -63,15 +42,9 @@ GameObject* DataStorage::getObject(std::string name)
     
 }
 
-std::vector<GameObject*> DataStorage::getAllObjects()
+std::map<std::string, GameObject>* DataStorage::getAllObjects()
 {
-  std::vector<GameObject*> obj;
-  std::map<std::string, GameObject>::iterator i;
-  
-  for (i = objects.begin(); i != objects.end(); std::advance(i, 1)) 
-    obj.push_back(&(i -> second));
-  
-  return obj;
+  return &(this -> objects);
 }
 
 bool DataStorage::createObjectInStorage(std::string name)
@@ -79,9 +52,11 @@ bool DataStorage::createObjectInStorage(std::string name)
 
     if (objects.find(name) == objects.end()) // check, that it doesn't exist in objects
     {
-        GameObject* newObject = new GameObject;
-        newObject->name = name;
-        objects[name] = *newObject;
+        //GameObject* newObject = new GameObject;
+        GameObject newObject;
+        //newObject->name = name;
+        objects[name] = newObject;      //do dot need dynamic memory as a new element is created in the map
+        objects[name].name = name;
         return true;
     }
 

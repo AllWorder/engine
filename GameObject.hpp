@@ -1,59 +1,10 @@
-#include <typeinfo>
 
-class GameObject;
-
-class Component
-{
-    public:
-
-        std::string name;
-        GameObject* objPointer;
-
-        virtual ~Component()
-        {           
-        }
-
-
-    private:
-
-};
-
-
-class GameObject
-{
-    public:
-
-        std::string name;
-
-        template <typename T>
-        bool addComponent();
-
-        template <typename T>
-        void deleteComponent();
-
-        template <typename T>
-        T* getComponent();
-
-
-        int x = 0;
-        int y = 0;
-
-        ~GameObject()
-        {
-            for(Component* c: components)
-                delete c;
-        }
-
-
-    private:
-
-        std::vector<Component*> components;
-
-};
 
 template <typename T>
-bool GameObject::addComponent()
+bool GameObject::addComponent(GrManager* grManager, SController* sc)
 {
+	std::cout << typeid(T).name() << '\n'; //?
+ 
     for(Component* c: components)
     {
         if(c -> name == typeid(T).name())
@@ -65,16 +16,35 @@ bool GameObject::addComponent()
     T* comp = new T;
     comp->objPointer = this; // pointer to self-object
     components.push_back(comp);
+    
+    if ( (std::is_base_of<Script, T>::value) )
+    {  	
+		std::cout << "I am not renderer " << typeid(T).name() << '\n';		
+		sc -> registerScript(comp);
+		return true;
+	}	    
 
-    return true;
+    if (typeid(T).name() == typeid(Renderer).name())
+    {
+      grManager -> registerRenderer(comp );
+      return true;
+    }
+    
 }
 
 template <typename T>
-void GameObject::deleteComponent()
+void GameObject::deleteComponent(GrManager* grManager, SController* sc)
 {
   for(Component* c: components)
     if(c -> name == typeid(T).name())
     {
+      T* comp = c;
+      if (typeid(T).name() == typeid(Renderer).name())
+        grManager -> unregisterRenderer(comp);
+
+      if ( std::is_base_of<Script, T>::value )
+        sc -> unregisterScript(comp);
+
       delete c;
       return;
     }  

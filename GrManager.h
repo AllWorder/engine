@@ -1,26 +1,43 @@
 
-class GrManager
+GrManager::GrManager()
 {
-  public:
-    void drawAll(sf::RenderWindow* pointer, DataStorage* data);
-    void clear();
-    //~GrManager();
-};
+  sf::RenderWindow* windows = new sf::RenderWindow;
+  windows -> create(sf::VideoMode(SCREEN_X, SCREEN_Y), "game");
+  windows -> setVerticalSyncEnabled(true);
+  windows -> setFramerateLimit(60);
+  window = windows;
+}
 
-void GrManager::drawAll(sf::RenderWindow* pointer, DataStorage* data)
+GrManager::~GrManager()
+{
+  delete window;
+}
+
+void GrManager::registerRenderer(Renderer* renderer)
+{
+  render.push_back(renderer);
+}
+
+void GrManager::unregisterRenderer(Renderer* renderer)
+{
+  std::vector<Renderer*>::iterator i;
+  i = render.begin();
+  for (Renderer* c: render)
+    if (c != renderer)
+      i++;
+  render.erase(i);
+}
+
+void GrManager::drawAll()
 { 
-  pointer -> clear();
-
-  std::map <std::string, GameObject> :: iterator i;
-  for (i = (data -> objects).begin(); i != (data -> objects).end(); std::advance(i, 1))
+  window -> clear();
+  
+  for(Renderer* c: render)
   {
-    if (i -> second.getComponent<Renderer>() != NULL)
-    {
-      i -> second.getComponent<Renderer>()->updatePosition(); // updates real object's coords to graph coords
-      pointer -> draw(i -> second.getComponent<Renderer>()->shape); // где проверка на isVisible?
-    }
+    c -> updatePosition();
+    window -> draw(c -> shape);
   }
 
-  pointer -> display(); 
+  window -> display(); 
 } 
 

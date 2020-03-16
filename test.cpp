@@ -1,12 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <iterator>
-#include "DataStorage.hpp"
+#include "Head.h"
+#include "Script.h"
 #include "Renderer.hpp"
 #include "GrManager.h"
+#include "SController.h"
+#include "GameObject.hpp"
+#include "DataStorage.hpp"
 
-const int SCREEN_Y = 720;
-const int SCREEN_X = 1280;
+
 
 class TestComponent: public Component
 {
@@ -26,26 +29,30 @@ main()
     //GameObject obj1;
     //obj1.name = "obj1";
     GrManager graphicsManager;
+    SController sc;
 
 
 
     data.createObjectInStorage("obj1"); //?
-    (data.getObject("obj1")) -> addComponent<Renderer>();
+    (data.getObject("obj1")) -> addComponent<Renderer>(&graphicsManager, &sc);
 
     (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
     (data.getObject("obj1")) -> getComponent<Renderer>()->setSize(100, 100);
-
+	
+	Monster monstr;
+	std::cout << (std::is_base_of<Script, Renderer>::value) << '\n';
+	(data.getObject("obj1")) -> addComponent<Monster>(&graphicsManager, &sc);
+	//sc.registerScript(&monstr);
 
 
     sf::Event event;
-    sf::RenderWindow window(sf::VideoMode(SCREEN_X, SCREEN_Y), "game");
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);
 
     int newX = 0;
     int newY = 0;
 
-    while (window.isOpen())
+	
+
+    while ((graphicsManager.window) -> isOpen())
     {
         //PHISICS: 
 
@@ -59,20 +66,21 @@ main()
 
         //EVENT HANDLER
 
-        while (window.pollEvent(event))
+        while ((graphicsManager.window) -> pollEvent(event))
 		{
 		    if (event.type == sf::Event::Closed) 
-                  window.close();
+                  (graphicsManager.window) -> close();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            window.close();
+            (graphicsManager.window) -> close();
 
         //LOGICS:
-
+		
+		sc.doAllScripts();
         //GRAPHICS:
 
-        graphicsManager.drawAll(&window, &data);
+        graphicsManager.drawAll();
     }
 
   data.deleteObject("obj1");       
