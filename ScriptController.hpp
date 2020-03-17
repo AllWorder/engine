@@ -18,7 +18,7 @@ void SController::unregisterScript(Component* script)
 void SController::doAllScripts()
 {
   for (Script* c: scripts)
-    c -> execute();
+    c -> execute(dataPointer);
 }
 
 void SController::getDataStorageLink(DataStorage* data)

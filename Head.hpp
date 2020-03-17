@@ -47,15 +47,6 @@ class Renderer: public Component
 
 };
 
-class Script : public Component
-{
-  public:
-  virtual void execute()
-  {}
-  
-};
-
-
 class DataStorage
 {
     public:
@@ -76,6 +67,13 @@ class DataStorage
 
 };
 
+class Script : public Component
+{
+  public:
+  virtual void execute(DataStorage* data)
+  {}
+  
+};
 
 class PlayerController: public Script
 {
@@ -86,7 +84,7 @@ class PlayerController: public Script
     this->name = typeid(PlayerController).name();
   }
 
-  void execute();
+  void execute(DataStorage* data);
 
 };
 
@@ -99,9 +97,8 @@ class MonsterSpawner: public Script
     this->name = typeid(MonsterSpawner).name();
   }
 
-  void execute()
-  {
-  }
+  void execute(DataStorage* data);
+
 };
 
 class Monster : public Script
@@ -113,23 +110,9 @@ class Monster : public Script
     this->name = typeid(Monster).name();
   }
 
-  void execute()
+  void execute(DataStorage* data)
   {
   }
-};
-
-class SController
-{
-  public:
-
-  DataStorage* dataPointer;
-
-  void registerScript(Component* script);
-  void unregisterScript(Component* script);
-  void doAllScripts();
-  void getDataStorageLink(DataStorage* data);
-  
-  std::vector<Script*> scripts;
 };
 
 class GrManager
@@ -144,6 +127,20 @@ class GrManager
   
     sf::RenderWindow* window;
     std::vector<Renderer*> render;
+};
+
+class SController
+{
+  public:
+
+  DataStorage* dataPointer;
+
+  void registerScript(Component* script);
+  void unregisterScript(Component* script);
+  void doAllScripts();
+  void getDataStorageLink(DataStorage* data);
+  
+  std::vector<Script*> scripts;
 };
 
 class GameObject
