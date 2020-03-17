@@ -3,33 +3,30 @@
 template <typename T>
 bool GameObject::addComponent(GrManager* grManager, SController* sc)
 {
-	std::cout << typeid(T).name() << '\n'; //?
- 
-    for(Component* c: components)
+  for(Component* c: components)
+  {
+    if(c -> name == typeid(T).name())
     {
-        if(c -> name == typeid(T).name())
-        {
-            std::cout << "This component is already adeed" << '\n';
-            return false;
-        }
+      std::cout << "This component is already adeed" << '\n';
+      return false;
     }
-    T* comp = new T;
-    comp->objPointer = this; // pointer to self-object
-    components.push_back(comp);
+  }
     
-    if ( (std::is_base_of<Script, T>::value) )
-    {  	
-		std::cout << "I am not renderer " << typeid(T).name() << '\n';		
-		sc -> registerScript(comp);
-		return true;
-	}	    
+  T* comp = new T;
+  comp->objPointer = this; // pointer to self-object
+  components.push_back(comp);
 
     if (typeid(T).name() == typeid(Renderer).name())
     {
-      grManager -> registerRenderer(comp );
+      grManager -> registerRenderer(comp);
       return true;
     }
     
+  if ( (std::is_base_of<Script, T>::value) == 1 )
+  {  	
+		sc -> registerScript(comp);
+		return true;
+  }	       
 }
 
 template <typename T>
@@ -38,7 +35,7 @@ void GameObject::deleteComponent(GrManager* grManager, SController* sc)
   for(Component* c: components)
     if(c -> name == typeid(T).name())
     {
-      T* comp = c;
+      Component* comp = c;
       if (typeid(T).name() == typeid(Renderer).name())
         grManager -> unregisterRenderer(comp);
 

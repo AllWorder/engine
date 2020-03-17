@@ -55,12 +55,66 @@ class Script : public Component
   
 };
 
+
+class DataStorage
+{
+    public:
+
+        bool addObject(GameObject& newObject);
+
+        bool deleteObject(std::string name);
+
+        GameObject* getObject(std::string name);
+
+        std::map<std::string, GameObject>* getAllObjects();
+
+        bool createObjectInStorage(std::string name);
+
+    
+
+        std::map <std::string, GameObject> objects;
+
+};
+
+
+class PlayerController: public Script
+{
+  public:
+
+  PlayerController()
+  {
+    this->name = typeid(PlayerController).name();
+  }
+
+  void execute();
+
+};
+
+class MonsterSpawner: public Script
+{
+  public:
+
+  MonsterSpawner()
+  {
+    this->name = typeid(MonsterSpawner).name();
+  }
+
+  void execute()
+  {
+  }
+};
+
 class Monster : public Script
 {
   public:
+
+  Monster()
+  {
+    this->name = typeid(Monster).name();
+  }
+
   void execute()
   {
-	std::cout << "JL" << '\n'; 
   }
 };
 
@@ -68,9 +122,12 @@ class SController
 {
   public:
 
-  void registerScript(Script* script);
-  void unregisterScript(Script* script);
+  DataStorage* dataPointer;
+
+  void registerScript(Component* script);
+  void unregisterScript(Component* script);
   void doAllScripts();
+  void getDataStorageLink(DataStorage* data);
   
   std::vector<Script*> scripts;
 };
@@ -80,8 +137,8 @@ class GrManager
   public:
     GrManager();
     ~GrManager();
-    void registerRenderer(Renderer* renderer);
-    void unregisterRenderer(Renderer* renderer);
+    void registerRenderer(Component* renderer);
+    void unregisterRenderer(Component* renderer);
     void drawAll();
     void clear();
   
@@ -118,25 +175,5 @@ class GameObject
     private:
 
         std::vector<Component*> components;
-
-};
-
-class DataStorage
-{
-    public:
-
-        bool addObject(GameObject& newObject);
-
-        bool deleteObject(std::string name);
-
-        GameObject* getObject(std::string name);
-
-        std::map<std::string, GameObject>* getAllObjects();
-
-        bool createObjectInStorage(std::string name);
-
-    
-
-        std::map <std::string, GameObject> objects;
 
 };

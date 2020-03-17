@@ -13,17 +13,17 @@ GrManager::~GrManager()
   delete window;
 }
 
-void GrManager::registerRenderer(Renderer* renderer)
+void GrManager::registerRenderer(Component* renderer)
 {
-  render.push_back(renderer);
+  render.push_back(static_cast<Renderer*>(renderer));
 }
 
-void GrManager::unregisterRenderer(Renderer* renderer)
+void GrManager::unregisterRenderer(Component* renderer)
 {
   std::vector<Renderer*>::iterator i;
   i = render.begin();
   for (Renderer* c: render)
-    if (c != renderer)
+    if (c != static_cast<Renderer*>(renderer))//?
       i++;
   render.erase(i);
 }
