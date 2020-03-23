@@ -1,7 +1,7 @@
 
 
 template <typename T>
-bool GameObject::addComponent(GrManager* grManager, SController* sc)
+bool GameObject::addComponent(Singleton* sing)
 {
   for(Component* c: components)
   {
@@ -18,29 +18,29 @@ bool GameObject::addComponent(GrManager* grManager, SController* sc)
 
     if (typeid(T).name() == typeid(Renderer).name())
     {
-      grManager -> registerRenderer(comp);
+      sing -> grManager -> registerRenderer(comp);
       return true;
     }
     
   if ( (std::is_base_of<Script, T>::value) == 1 )
   {  	
-		sc -> registerScript(comp);
-		return true;
+    sing -> sc -> registerScript(comp);
+    return true;
   }	       
 }
 
 template <typename T>
-void GameObject::deleteComponent(GrManager* grManager, SController* sc)
+void GameObject::deleteComponent(Singleton* sing)
 {
   for(Component* c: components)
     if(c -> name == typeid(T).name())
     {
       Component* comp = c;
       if (typeid(T).name() == typeid(Renderer).name())
-        grManager -> unregisterRenderer(comp);
+        sing -> grManager -> unregisterRenderer(comp);
 
       if ( std::is_base_of<Script, T>::value )
-        sc -> unregisterScript(comp);
+        sing -> sc -> unregisterScript(comp);
 
       delete c;
       return;

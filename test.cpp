@@ -11,8 +11,10 @@
 #include "ScriptController.hpp"
 #include "GameObject.hpp"
 #include "DataStorage.hpp"
+#include "Singleton.h"
 
 #include "CustomScripts.hpp"
+
 
 
 main()
@@ -26,20 +28,28 @@ main()
     std::cout << a << '\n';
     
     DataStorage data;
-
     GrManager graphicsManager;
     SController sc;
-    sc.getDataStorageLink(&data);
+    int timer = 0;
+    
+    Singleton* sing;
+    sing = sing -> getInstance();
+    
+    sing -> data = &data;
+    sing -> sc = &sc;
+    sing -> grManager = &graphicsManager;
+    sing -> timer = &timer;
 
-
-
-    data.createObjectInStorage("obj1");
-    (data.getObject("obj1")) -> addComponent<Renderer>(&graphicsManager, &sc);
+    sing -> data -> createObjectInStorage("obj1");
+    (data.getObject("obj1")) -> addComponent<Renderer>(sing);
     (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
     (data.getObject("obj1")) -> getComponent<Renderer>()->setSize(100, 100);
 
-	(data.getObject("obj1")) -> addComponent<PlayerController>(&graphicsManager, &sc);
+    (data.getObject("obj1")) -> addComponent<PlayerController>(sing);
 
+    sing -> data -> createObjectInStorage("obj2");
+    (data.getObject("obj2")) -> addComponent<MonsterSpawner>(sing);
+    
 
     sf::Event event;
 
@@ -48,6 +58,7 @@ main()
 
     while ((graphicsManager.window) -> isOpen())
     {
+        timer++;
         //PHISICS: 
 
 
@@ -63,13 +74,16 @@ main()
             (graphicsManager.window) -> close();
 
         //LOGICS:
+        
+         
 		
-		sc.doAllScripts();
+		sc.doAllScripts(sing);
 
         //GRAPHICS:
 
         graphicsManager.drawAll();
     }
 
-  data.deleteObject("obj1");       
+  data.deleteObject("obj1");
+  sing -> deleteInstance();       
 }

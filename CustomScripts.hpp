@@ -1,5 +1,5 @@
 
-void PlayerController::execute(DataStorage* data)
+void PlayerController::execute(Singleton* sing)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         objPointer->y -= 5;
@@ -11,19 +11,21 @@ void PlayerController::execute(DataStorage* data)
         objPointer->x += 5;
 }
 
-void MonsterSpawner::execute(DataStorage* data)
+void MonsterSpawner::execute(Singleton* sing)
 {
-    int monsterID = rand() % 10;
+  if (*(sing -> timer) % 10 == 0)
+  {
+    int monsterID = *(sing -> timer);
     std::string monsterName = "monster";
-    monsterName.append(std::to_string(monsterID)); //giving monster unique name
+    monsterName.append(std::to_string(monsterID)); //giving monster unique name. HaHaha, not unique, it turned out
     std::cout << monsterName << '\n';
 
-    data->createObjectInStorage(monsterName);
-    //data->getObject(monsterName) -> addComponent<Renderer>(); // REQUIRES STUPID LINKS!!!!!! WHO OWN THEM?
-    //data->getObject(monsterName) -> getComponent<Renderer>()->loadTexture("monster/opexus.png");
-    //data->getObject(monsterName) -> getComponent<Renderer>()->setSize(100, 200);
+    sing -> data -> createObjectInStorage(monsterName);
+    sing -> data -> getObject(monsterName) -> addComponent<Renderer>(sing); // REQUIRES STUPID LINKS!!!!!! WHO OWN THEM?
+    sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
+    sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->setSize(100, 200);
 
-    data->getObject(monsterName)-> x = rand() % 100;
-    data->getObject(monsterName)-> y = rand() % 100;
-
+    sing -> data -> getObject(monsterName)-> x = rand() % 1100;
+    sing -> data -> getObject(monsterName)-> y = rand() % 600;
+  }
 }

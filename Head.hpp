@@ -8,6 +8,7 @@ const int SCREEN_X = 1280;
 
 
 class GameObject;
+class SController;
 
 class Component
 {
@@ -67,54 +68,6 @@ class DataStorage
 
 };
 
-class Script : public Component
-{
-  public:
-  virtual void execute(DataStorage* data)
-  {}
-  
-};
-
-class PlayerController: public Script
-{
-  public:
-
-  PlayerController()
-  {
-    this->name = typeid(PlayerController).name();
-  }
-
-  void execute(DataStorage* data);
-
-};
-
-class MonsterSpawner: public Script
-{
-  public:
-
-  MonsterSpawner()
-  {
-    this->name = typeid(MonsterSpawner).name();
-  }
-
-  void execute(DataStorage* data);
-
-};
-
-class Monster : public Script
-{
-  public:
-
-  Monster()
-  {
-    this->name = typeid(Monster).name();
-  }
-
-  void execute(DataStorage* data)
-  {
-  }
-};
-
 class GrManager
 {
   public:
@@ -129,19 +82,82 @@ class GrManager
     std::vector<Renderer*> render;
 };
 
+
+class Singleton 
+{
+  private:
+  static Singleton* instance;
+  Singleton(){};
+  Singleton (const Singleton&) {};
+  Singleton& operator= (Singleton&) {};
+  public:
+  GrManager* grManager;
+  SController* sc;
+  DataStorage* data;
+  int* timer;
+  static Singleton* getInstance();
+  static void deleteInstance();
+};
+
+class Script : public Component
+{
+  public:
+  virtual void execute(Singleton* sing)
+  {}
+  
+};
+
 class SController
 {
   public:
 
-  DataStorage* dataPointer;
-
   void registerScript(Component* script);
   void unregisterScript(Component* script);
-  void doAllScripts();
-  void getDataStorageLink(DataStorage* data);
+  void doAllScripts(Singleton* sing);
   
   std::vector<Script*> scripts;
 };
+
+class PlayerController: public Script
+{
+  public:
+
+  PlayerController()
+  {
+    this->name = typeid(PlayerController).name();
+  }
+
+  void execute(Singleton* sing);
+
+};
+
+class MonsterSpawner: public Script
+{
+  public:
+
+  MonsterSpawner()
+  {
+    this->name = typeid(MonsterSpawner).name();
+  }
+
+  void execute(Singleton* sing);
+
+};
+
+class Monster : public Script
+{
+  public:
+
+  Monster()
+  {
+    this->name = typeid(Monster).name();
+  }
+
+  void execute(Singleton* sing)
+  {
+  }
+};
+
 
 class GameObject
 {
@@ -150,10 +166,10 @@ class GameObject
         std::string name;
 
         template <typename T>
-        bool addComponent(GrManager* grManager, SController* sc);
+        bool addComponent(Singleton* sing);
 
         template <typename T>
-        void deleteComponent(GrManager* grManager, SController* sc);
+        void deleteComponent(Singleton* sing);
 
         template <typename T>
         T* getComponent();
@@ -174,3 +190,10 @@ class GameObject
         std::vector<Component*> components;
 
 };
+
+
+  
+
+
+
+

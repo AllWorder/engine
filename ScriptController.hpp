@@ -15,13 +15,10 @@ void SController::unregisterScript(Component* script)
   scripts.erase(i);
 }
 
-void SController::doAllScripts()
+void SController::doAllScripts(Singleton* sing)
 {
   for (Script* c: scripts)
-    c -> execute(dataPointer);
+    c -> execute(sing);
 }
 
-void SController::getDataStorageLink(DataStorage* data)
-{
-  dataPointer = data;
-}
+
