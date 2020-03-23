@@ -1,58 +1,45 @@
+#ifndef GAME_OBJECT
+#define GAME_OBJECT
+
+#include "Head.hpp"
+#include "Singleton.h"
 
 
-template <typename T>
-bool GameObject::addComponent(Singleton* sing)
+#include "GraphicManager.hpp"
+#include "ScriptController.hpp"
+#include "Renderer.hpp"
+
+class GameObject
 {
-  for(Component* c: components)
-  {
-    if(c -> name == typeid(T).name())
-    {
-      std::cout << "This component is already adeed" << '\n';
-      return false;
-    }
-  }
-    
-  T* comp = new T;
-  comp->objPointer = this; // pointer to self-object
-  components.push_back(comp);
+    public:
 
-    if (typeid(T).name() == typeid(Renderer).name())
-    {
-      sing -> grManager -> registerRenderer(comp);
-      return true;
-    }
-    
-  if ( (std::is_base_of<Script, T>::value) == 1 )
-  {  	
-    sing -> sc -> registerScript(comp);
-    return true;
-  }	       
-}
+        std::string name;
 
-template <typename T>
-void GameObject::deleteComponent(Singleton* sing)
-{
-  for(Component* c: components)
-    if(c -> name == typeid(T).name())
-    {
-      Component* comp = c;
-      if (typeid(T).name() == typeid(Renderer).name())
-        sing -> grManager -> unregisterRenderer(comp);
+        template <typename T>
+        bool addComponent(Singleton* sing);
 
-      if ( std::is_base_of<Script, T>::value )
-        sing -> sc -> unregisterScript(comp);
+        template <typename T>
+        void deleteComponent(Singleton* sing);
 
-      delete c;
-      return;
-    }  
-}
+        template <typename T>
+        T* getComponent();
 
-template <typename T>
-T* GameObject::getComponent()
-{
-    for(Component* c: components)
-        if(c -> name == typeid(T).name())
-            return static_cast<T*>(c);
 
-    return NULL;
-}
+        int x = 0;
+        int y = 0;
+
+        ~GameObject()
+        {
+            for(Component* c: components)
+                delete c;
+        }
+
+
+    private:
+
+        std::vector<Component*> components;
+
+};
+
+
+#endif

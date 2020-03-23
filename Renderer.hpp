@@ -1,31 +1,33 @@
+#ifndef RENDERER
+#define RENDERER
 
+#include "Head.hpp"
+#include "GameObject.hpp"
 
-void Renderer::setSize(int xLen, int yLen)
-{
-    xSize = xLen;
-    ySize = yLen;
-    shape.setSize(sf::Vector2f(xSize, ySize));
-}
+class Renderer: public Component
+{ 
+    public:
 
-void Renderer::updatePosition()
-{
-    shape.setPosition(objPointer->x - xSize / 2, objPointer->y - ySize / 2);
-}
+        bool isVisible = true;
 
-void Renderer::setTexture(sf::Texture* newTexture)
-{
-    shape.setTexture(newTexture);
-}
+        int xSize = 50;
+        int ySize = 50;
 
-void Renderer::loadTexture(std::string imagePath)
-{
-    if (!texture.loadFromFile(imagePath))
-    {
-        std::cout << "Loading texture erorr" << "\n";
-        return;
-    }
+        sf::RectangleShape shape;
+        sf::Texture texture;
 
-    texture.setSmooth(true);
-    shape.setTexture(&texture);    
-}
+        void setSize(int xLen, int yLen);
+        void updatePosition();
+        void setTexture(sf::Texture* newTexture);
+        void loadTexture(std::string imagePath); // loads and automathicaly set it
 
+        Renderer()
+        {
+            this->name = typeid(Renderer).name();
+        }
+
+    private:
+
+};
+
+#endif

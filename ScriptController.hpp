@@ -1,24 +1,22 @@
+#ifndef SCRIPT_CONTROLLER
+#define SCRIPT_CONTROLLER
+
+#include "Head.hpp"
+#include "Script.hpp"
+#include "Singleton.h"
 
 
-void SController::registerScript(Component* script)
+
+
+class SController
 {
-  scripts.push_back(static_cast<Script*>(script));
-}
+  public:
 
-void SController::unregisterScript(Component* script)
-{
-  std::vector<Script*>::iterator i;
-  i = scripts.begin();
-  for (Script* c: scripts)
-    if (c != static_cast<Script*>(script))
-      i++;
-  scripts.erase(i);
-}
+  void registerScript(Component* script);
+  void unregisterScript(Component* script);
+  void doAllScripts(Singleton* sing);
+  
+  std::vector<Script*> scripts;
+};
 
-void SController::doAllScripts(Singleton* sing)
-{
-  for (Script* c: scripts)
-    c -> execute(sing);
-}
-
-
+#endif

@@ -1,19 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <iterator>
-#include <string>
-#include <time.h>
-
 #include "Head.hpp"
+#include "Singleton.h"
 #include "Script.hpp"
-#include "Renderer.hpp"
 #include "GraphicManager.hpp"
 #include "ScriptController.hpp"
 #include "GameObject.hpp"
 #include "DataStorage.hpp"
-#include "Singleton.h"
-
+#include "Renderer.hpp"
 #include "CustomScripts.hpp"
+
 
 
 
@@ -21,11 +15,6 @@ main()
 {
 
     srand(time(0));
-
-    int j = rand() % 10;
-    std::string a = "object";
-    a.append(std::to_string(j));
-    std::cout << a << '\n';
     
     DataStorage data;
     GrManager graphicsManager;
