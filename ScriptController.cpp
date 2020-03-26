@@ -1,4 +1,5 @@
 #include "ScriptController.hpp"
+#include "Script.hpp" 
 
 void SController::registerScript(Component* script)
 {

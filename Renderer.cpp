@@ -1,4 +1,16 @@
+#include "Head.hpp"
+#include "GameObject.hpp"
 #include "Renderer.hpp"
+#include "ScriptController.hpp"
+#include "GraphicManager.hpp"
+#include "Singleton.h"
+#include "Script.hpp"
+#include "CustomScripts.hpp"
+
+Renderer::Renderer()
+{
+    this->name = typeid(Renderer).name();
+}
 
 void Renderer::setSize(int xLen, int yLen)
 {

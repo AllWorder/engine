@@ -1,4 +1,5 @@
 #include "DataStorage.hpp"
+#include "GameObject.hpp"
 
 bool DataStorage::addObject(GameObject& newObject)
 {

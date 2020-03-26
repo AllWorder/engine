@@ -2,8 +2,6 @@
 #define SCRIPT
 
 #include "Head.hpp"
-#include "Singleton.h"
-
 
 class Script : public Component
 {

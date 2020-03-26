@@ -28,6 +28,13 @@ class Component
         }
 };
 
+class Singleton;
+class Renderer;
+class Script;
+class DataStorage;
+class GrManager;
+class SController;
+
 
 #endif
 

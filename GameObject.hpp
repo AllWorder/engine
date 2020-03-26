@@ -2,12 +2,6 @@
 #define GAME_OBJECT
 
 #include "Head.hpp"
-#include "Singleton.h"
-
-
-#include "GraphicManager.hpp"
-#include "ScriptController.hpp"
-#include "Renderer.hpp"
 
 class GameObject
 {

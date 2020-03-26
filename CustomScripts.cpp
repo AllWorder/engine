@@ -1,4 +1,12 @@
+#include "Head.hpp"
+#include "Script.hpp"
 #include "CustomScripts.hpp"
+#include "GameObject.hpp"
+#include "Renderer.hpp"
+#include "Singleton.h"
+#include "GraphicManager.hpp"
+#include "ScriptController.hpp"
+#include "DataStorage.hpp"
 
 void PlayerController::execute(Singleton* sing)
 {

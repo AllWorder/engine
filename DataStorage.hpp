@@ -2,7 +2,6 @@
 #define DATA_STORAGE
 
 #include "Head.hpp"
-#include "GameObject.hpp"
 
 class DataStorage
 {

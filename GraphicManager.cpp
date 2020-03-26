@@ -1,4 +1,5 @@
 #include "GraphicManager.hpp"
+#include "Renderer.hpp"
 
 GrManager::GrManager()
 {

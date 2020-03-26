@@ -2,7 +2,6 @@
 #define RENDERER
 
 #include "Head.hpp"
-#include "GameObject.hpp"
 
 class Renderer: public Component
 { 
@@ -21,11 +20,8 @@ class Renderer: public Component
         void setTexture(sf::Texture* newTexture);
         void loadTexture(std::string imagePath); // loads and automathicaly set it
 
-        Renderer()
-        {
-            this->name = typeid(Renderer).name();
-        }
-
+        Renderer();
+    
     private:
 
 };

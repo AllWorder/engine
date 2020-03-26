@@ -2,11 +2,6 @@
 #define SCRIPT_CONTROLLER
 
 #include "Head.hpp"
-#include "Script.hpp"
-#include "Singleton.h"
-
-
-
 
 class SController
 {

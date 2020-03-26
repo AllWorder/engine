@@ -2,8 +2,6 @@
 #define GRAPHIC_MANAGER
 
 #include "Head.hpp"
-#include "Renderer.hpp"
-
 
 class GrManager
 {

@@ -8,8 +8,7 @@
 #include "Renderer.hpp"
 #include "CustomScripts.hpp"
 
-
-
+//g++ test.cpp CustomScripts.cpp DataStorage.cpp GameObject.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
 
 main()
 {
