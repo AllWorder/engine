@@ -28,26 +28,28 @@ std::vector<Collider*> PhysController::findCollisions()
   for (Collider* c: colliders)
     for (Collider* d: colliders)
     {
-      if ((c) -> checkCollision(d) )
+      if (((c) -> checkCollision(d)) and (c != d))
       {
         collided.push_back(c);
         collided.push_back(d);
+        //std::cout << "c name " << c -> objPointer -> name << '\n';
+        //std::cout << "d name " << d -> objPointer -> name << '\n';
       }
     }
-  if (collided.size() == 4)
-    std::cout << "size of collided " << collided.size() << std::endl;
+  //if (collided.size() == 4)
+    //std::cout << "size of collided " << collided.size() << std::endl;
   fflush(0);
   return collided;
 }
 
 void PhysController::resolveCollisions(std::vector<Collider*> collided, Singleton* sing)
 {
-  std::vector<Collider*>::iterator j;
-  
-  for (j = collided.begin(); j < collided.end(); std::advance(j, 2))
+  for (int i = 0; i < collided.size(); i += 2 )
   {
-    (*j) -> resolveCollision(*(j++), sing); 
-    //std::cout << "collision resolve " << '\n';
+    //std::cout << i  << '\n';
+    //i++;
+    collided[i] -> resolveCollision(collided[i + 1], sing); 
+    
     //(*(j++)) -> resolveCollision(*j, sing);
   }
 }

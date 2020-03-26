@@ -2,16 +2,18 @@
 void PlayerController::execute(Singleton* sing)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        objPointer -> getComponent<Collider>() -> shape.velocityS[1] -= 0.05;
+        objPointer -> getComponent<Collider>() -> shape.velocityS[1] -= 0.5;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        objPointer -> getComponent<Collider>() -> shape.velocityS[1] += 0.05;
+        objPointer -> getComponent<Collider>() -> shape.velocityS[1] += 0.5;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        objPointer -> getComponent<Collider>() -> shape.velocityS[0] -= 0.05;
+        objPointer -> getComponent<Collider>() -> shape.velocityS[0] -= 0.5;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        objPointer -> getComponent<Collider>() -> shape.velocityS[0] += 0.05;
+        objPointer -> getComponent<Collider>() -> shape.velocityS[0] += 0.5;
 
   objPointer -> x += objPointer -> getComponent<Collider>() -> shape.velocityS[0];
   objPointer -> y += objPointer -> getComponent<Collider>() -> shape.velocityS[1];
+  objPointer -> getComponent<Collider>() -> shape.velocityS[0] *= 0.97;
+  objPointer -> getComponent<Collider>() -> shape.velocityS[1] *= 0.97;
 }
 
 void MonsterSpawner::execute(Singleton* sing)
@@ -37,9 +39,15 @@ void BehaviourWhileCollided::collisionResolving(Collider* source, Collider* enem
 {
   if (source -> objPointer -> name != "obj1")
     return;
-  //std::cout << "Function called for player" << std::endl;
-
-  fflush(0);
+  if (source -> checkDiverge(enemy))                            //Use SIMPLE polygons in order not to Fuck Up
+  {
+    source -> shape.velocityS[0] *= 1.031;
+    source -> shape.velocityS[1] *= 1.031;
+    //std::cout << source -> checkDiverge(enemy) << '\n';
+    return;
+  }
+  
+  //std::cout << "player hit " << '\n';
   if (enemy -> objPointer -> name == "wall1")
     source -> shape.velocityS[0] = - source -> shape.velocityS[0];
   if (enemy -> objPointer -> name == "wall2")

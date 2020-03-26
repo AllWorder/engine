@@ -65,34 +65,34 @@ main()
     sing -> data -> createObjectInStorage("wall1");
     (data.getObject("wall1")) -> addComponent<Collider>(sing);
     (data.getObject("wall1")) -> addComponent<BehaviourWhileCollided>(sing);
-    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(1, 2);
-    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(1, 719);
-    (data.getObject("wall1")) -> x = 0;
-    (data.getObject("wall1")) -> y = 0;
+    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(500, -500);
+    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(500, 220);
+    (data.getObject("wall1")) -> x = -500;
+    (data.getObject("wall1")) -> y = 500;
 
     sing -> data -> createObjectInStorage("wall2");
     (data.getObject("wall2")) -> addComponent<Collider>(sing);
     (data.getObject("wall2")) -> addComponent<BehaviourWhileCollided>(sing);
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(0, 720);
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(1280, 720);
-    (data.getObject("wall2")) -> x = 0;
-    (data.getObject("wall2")) -> y = 0;
+    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(-500, -280);
+    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(780, -280);
+    (data.getObject("wall2")) -> x = 500;
+    (data.getObject("wall2")) -> y = 1000;
 
     sing -> data -> createObjectInStorage("wall3");
     (data.getObject("wall3")) -> addComponent<Collider>(sing);
     (data.getObject("wall3")) -> addComponent<BehaviourWhileCollided>(sing);
-    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(1280, 719);
-    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(1280, 1);
-    (data.getObject("wall3")) -> x = 0;
-    (data.getObject("wall3")) -> y = 0;
+    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(-720, 220);
+    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(-720, -500);
+    (data.getObject("wall3")) -> x = 2000;
+    (data.getObject("wall3")) -> y = 500;
 
     sing -> data -> createObjectInStorage("wall4");
     (data.getObject("wall4")) -> addComponent<Collider>(sing);
     (data.getObject("wall4")) -> addComponent<BehaviourWhileCollided>(sing);
-    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(0, 1);
-    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(1280, 1);
-    (data.getObject("wall4")) -> x = 0;
-    (data.getObject("wall4")) -> y = 0;
+    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(-500, 500);
+    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(780, 500);
+    (data.getObject("wall4")) -> x = 500;
+    (data.getObject("wall4")) -> y = -500;
     
     
 

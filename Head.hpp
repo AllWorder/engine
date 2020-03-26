@@ -229,7 +229,8 @@ class Collider : public Component
 {
   public:
   ObjShape shape;
-  bool checkCollision(Collider* obj2); 
+  bool checkCollision(Collider* obj2);
+  bool checkDiverge(Collider* obj2); 
   void resolveCollision(Collider* obj2, Singleton* sing);
   
   Collider()
