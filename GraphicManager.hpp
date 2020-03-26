@@ -35,7 +35,8 @@ void GrManager::drawAll()
   for(Renderer* c: render)
   {
     c -> updatePosition();
-    window -> draw(c -> shape);
+    if (c -> isVisible == true)
+      window -> draw(c -> shape);
   }
 
   window -> display(); 

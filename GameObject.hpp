@@ -26,6 +26,12 @@ bool GameObject::addComponent(Singleton* sing)
   {  	
     sing -> sc -> registerScript(comp);
     return true;
+  }
+
+  if (typeid(T).name() == typeid(Collider).name())
+  {
+    sing -> physController -> registerCollider(comp);
+    return true;
   }	       
 }
 
@@ -41,6 +47,9 @@ void GameObject::deleteComponent(Singleton* sing)
 
       if ( std::is_base_of<Script, T>::value )
         sing -> sc -> unregisterScript(comp);
+
+      if (typeid(T).name() == typeid(Collider).name())
+        sing -> physController -> unregisterCollider(comp);
 
       delete c;
       return;
