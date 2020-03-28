@@ -35,6 +35,12 @@ class DataStorage;
 class GrManager;
 class SController;
 
+class objShape;
+class Collider;
+class PhysController;
+class BehaviourWhileCollided;
+
+
 
 #endif
 

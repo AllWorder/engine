@@ -53,12 +53,11 @@ bool DataStorage::createObjectInStorage(std::string name)
 
     if (objects.find(name) == objects.end()) // check, that it doesn't exist in objects
     {
-        //GameObject* newObject = new GameObject;
         GameObject newObject;
-        //newObject->name = name;
         objects[name] = newObject;      //do dot need dynamic memory as a new element is created in the map
         objects[name].name = name;
         return true;
+        
     }
 
     else

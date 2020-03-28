@@ -9,7 +9,7 @@ class PlayerController: public Script
 
   PlayerController()
   {
-    //this->name = typeid(PlayerController).name();
+    this->name = typeid(PlayerController).name();
   }
 
   void execute(Singleton* sing);
@@ -22,7 +22,7 @@ class MonsterSpawner: public Script
 
   MonsterSpawner()
   {
-    //this->name = typeid(MonsterSpawner).name();
+    this->name = typeid(MonsterSpawner).name();
   }
 
   void execute(Singleton* sing);
@@ -35,7 +35,7 @@ class Monster : public Script
 
   Monster()
   {
-    //this->name = typeid(Monster).name();
+    this->name = typeid(Monster).name();
   }
 
   void execute(Singleton* sing)
