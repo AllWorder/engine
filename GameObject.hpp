@@ -74,7 +74,13 @@ bool GameObject::addComponent(Singleton* sing)
   {
     sing -> physController -> registerCollider(comp);
     return true;
-  }	       
+  }	
+
+  if ( (std::is_base_of<PhysicScript, T>::value) == 1 )
+  {  	
+    sing -> physController -> registerPhysicScript(comp);
+    return true;
+  }       
 }
 
 template <typename T>
@@ -89,6 +95,9 @@ void GameObject::deleteComponent(Singleton* sing)
 
       if ( std::is_base_of<Script, T>::value )
         sing -> sc -> unregisterScript(comp);
+      
+      if ( std::is_base_of<PhysicScript, T>::value )
+        sing -> physController -> unregisterPhysicScript(comp);
 
       if (typeid(T).name() == typeid(Collider).name())
         sing -> physController -> unregisterCollider(comp);

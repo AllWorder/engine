@@ -52,3 +52,27 @@ void PhysController::resolveCollisions(std::vector<Collider*> collided, Singleto
     
   }
 }
+
+//////////////
+//physScripts:
+
+void PhysController::registerPhysicScript(Component* physic)
+{
+  physicScripts.push_back(static_cast<PhysicScript*>(physic));
+}
+
+void PhysController::unregisterPhysicScript(Component* physic)
+{
+  std::vector<PhysicScript*>::iterator i;
+  i = physicScripts.begin();
+  for (PhysicScript* c: physicScripts)
+    if (c != static_cast<PhysicScript*>(physic))//?
+      i++;
+  physicScripts.erase(i);
+}
+
+void PhysController::doAllPhysics(Singleton* sing)
+{
+  for (PhysicScript* c: physicScripts)
+    c -> executePhysic(sing);
+}

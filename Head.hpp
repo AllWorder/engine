@@ -13,6 +13,7 @@
 
 const int SCREEN_Y = 720;
 const int SCREEN_X = 1280;
+const float g = 0.1;
 
 class GameObject;
 
@@ -39,6 +40,7 @@ class objShape;
 class Collider;
 class PhysController;
 class BehaviourWhileCollided;
+class PhysicScript;
 
 
 

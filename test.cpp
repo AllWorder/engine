@@ -11,6 +11,7 @@
 
 #include "Collider.hpp"
 #include "PhysController.hpp"
+#include "PhysicScripts.hpp"
 
 // for compilation use:
 //g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
@@ -18,14 +19,7 @@
 
 
 main()
-{
-
-    srand(time(0));
-
-    int j = rand() % 10;
-    std::string a = "object";
-    a.append(std::to_string(j));
-    std::cout << a << '\n';
+{  
     
     DataStorage data;
     GrManager graphicsManager;
@@ -56,6 +50,10 @@ main()
     (data.getObject("obj1")) -> y = 200;
 
     (data.getObject("obj1")) -> addComponent<PlayerController>(sing);
+    (data.getObject("obj1")) -> addComponent<VelocityPhysic>(sing);
+    (data.getObject("obj1")) -> addComponent<GravitationPhysic>(sing);
+
+
 
 
     sing -> data -> createObjectInStorage("wall1");
@@ -102,7 +100,13 @@ main()
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
     (data.getObject("obj2")) -> x = 400;
     (data.getObject("obj2")) -> y = 400;
-    //(data.getObject("obj2")) -> getComponent<Collider>() -> shape.velocityS[0] = 10; 
+    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.setVelocity(10, 10); 
+    (data.getObject("obj2")) -> addComponent<VelocityPhysic>(sing);
+    (data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
+
+    sing -> data -> createObjectInStorage("spawner");
+    (data.getObject("spawner")) -> addComponent<MonsterSpawner>(sing);
+
 
 
 
@@ -118,7 +122,9 @@ main()
     {
         timer++;
         //PHISICS: 
+
         physController.resolveCollisions(physController.findCollisions(), sing);
+        physController.doAllPhysics(sing);
 
 
         //EVENT HANDLER

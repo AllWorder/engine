@@ -9,6 +9,7 @@
 #include "DataStorage.hpp"
 #include "Collider.hpp"
 #include "PhysController.hpp"
+#include "PhysicScripts.hpp"
 
 void PlayerController::execute(Singleton* sing)
 {
@@ -21,10 +22,6 @@ void PlayerController::execute(Singleton* sing)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         objPointer -> getComponent<Collider>() -> shape.velocityS[0] += 0.5;
 
-  objPointer -> x += objPointer -> getComponent<Collider>() -> shape.velocityS[0];
-  objPointer -> y += objPointer -> getComponent<Collider>() -> shape.velocityS[1];
-  objPointer -> getComponent<Collider>() -> shape.velocityS[0] *= 0.97;
-  objPointer -> getComponent<Collider>() -> shape.velocityS[1] *= 0.97;
 }
 
 void MonsterSpawner::execute(Singleton* sing)
@@ -42,7 +39,16 @@ void MonsterSpawner::execute(Singleton* sing)
       sing -> data -> getObject(monsterName)-> y = rand() % 600;
       sing -> data -> getObject(monsterName) -> addComponent<Renderer>(sing);
       sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
-      sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->setSize(100, 150);
+      sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->setSize(100, 100);
+      sing -> data -> getObject(monsterName) -> addComponent<Collider>(sing);
+      sing -> data -> getObject(monsterName) -> addComponent<BehaviourWhileCollided>(sing);
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.addVertex(50, -49);
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.addVertex(49, 50);
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.setVelocity(rand() % 10, rand () % 10); 
+      sing -> data -> getObject(monsterName) -> addComponent<VelocityPhysic>(sing);
+
     }
 
   }
