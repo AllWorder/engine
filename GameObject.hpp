@@ -1,4 +1,46 @@
+#ifndef GAME_OBJECT
+#define GAME_OBJECT
 
+#include "Head.hpp"
+#include "Renderer.hpp"
+#include "ScriptController.hpp"
+#include "GraphicManager.hpp"
+#include "Singleton.h"
+#include "Script.hpp"
+#include "PhysController.hpp"
+#include "Collider.hpp"
+
+class GameObject
+{
+    public:
+
+        std::string name;
+
+        template <typename T>
+        bool addComponent(Singleton* sing);
+
+        template <typename T>
+        void deleteComponent(Singleton* sing);
+
+        template <typename T>
+        T* getComponent();
+
+
+        float x = 0;
+        float y = 0;
+
+        ~GameObject()
+        {
+            for(Component* c: components)
+                delete c;
+        }
+
+
+    private:
+
+        std::vector<Component*> components;
+
+};
 
 template <typename T>
 bool GameObject::addComponent(Singleton* sing)
@@ -32,7 +74,13 @@ bool GameObject::addComponent(Singleton* sing)
   {
     sing -> physController -> registerCollider(comp);
     return true;
-  }	       
+  }	
+
+  if ( (std::is_base_of<PhysicScript, T>::value) == 1 )
+  {  	
+    sing -> physController -> registerPhysicScript(comp);
+    return true;
+  }       
 }
 
 template <typename T>
@@ -47,6 +95,9 @@ void GameObject::deleteComponent(Singleton* sing)
 
       if ( std::is_base_of<Script, T>::value )
         sing -> sc -> unregisterScript(comp);
+      
+      if ( std::is_base_of<PhysicScript, T>::value )
+        sing -> physController -> unregisterPhysicScript(comp);
 
       if (typeid(T).name() == typeid(Collider).name())
         sing -> physController -> unregisterCollider(comp);
@@ -65,3 +116,6 @@ T* GameObject::getComponent()
 
     return NULL;
 }
+
+
+#endif

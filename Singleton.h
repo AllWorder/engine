@@ -1,20 +1,23 @@
-Singleton* Singleton::getInstance()
-{
-  if (!instance)
-  {
-    instance = new Singleton();
-    return instance;
-  } 
-  return instance;
-}
+#ifndef SINGLETON
+#define SINGLETON
 
-void Singleton::deleteInstance()
-{
-  if (!instance)
-  {
-    delete instance;
-    instance = 0;
-  }
-}
+#include "Head.hpp"
 
-Singleton* Singleton::instance = 0;
+class Singleton 
+{
+  private:
+  static Singleton* instance;
+  Singleton(){};
+  Singleton (const Singleton&) {};
+  Singleton& operator= (Singleton&) {};
+  public:
+  GrManager* grManager;
+  SController* sc;
+  DataStorage* data;
+  PhysController* physController;
+  int* timer;
+  static Singleton* getInstance();
+  static void deleteInstance();
+};
+
+#endif
