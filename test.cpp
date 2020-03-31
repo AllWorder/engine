@@ -46,8 +46,8 @@ main()
     (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(50, -49);
     (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(49, 50);
     (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
-    (data.getObject("obj1")) -> x = 200;
-    (data.getObject("obj1")) -> y = 200;
+    (data.getObject("obj1")) -> x = 500;
+    (data.getObject("obj1")) -> y = 360;
 
     (data.getObject("obj1")) -> addComponent<PlayerController>(sing);
     (data.getObject("obj1")) -> addComponent<VelocityPhysic>(sing);
@@ -96,17 +96,17 @@ main()
     sing -> data -> createObjectInStorage("obj2"); //player 
     (data.getObject("obj2")) -> addComponent<Renderer>(sing);
     (data.getObject("obj2")) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
-    (data.getObject("obj2")) -> getComponent<Renderer>()->setSize(100, 100);
+    (data.getObject("obj2")) -> getComponent<Renderer>()->setSize(10, 10);
     (data.getObject("obj2")) -> addComponent<Collider>(sing);
     (data.getObject("obj2")) -> addComponent<BWCollided_player>(sing);
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.mass = 300;
+    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.mass = 0.3;
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(50, -49);
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(49, 50);
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
-    (data.getObject("obj2")) -> x = 400;
-    (data.getObject("obj2")) -> y = 400;
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.setVelocity(1, 1); 
+    (data.getObject("obj2")) -> x = 300;
+    (data.getObject("obj2")) -> y = 330;
+    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.setVelocity(5, 0); 
     (data.getObject("obj2")) -> addComponent<VelocityPhysic>(sing);
     (data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
 

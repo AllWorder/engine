@@ -34,12 +34,19 @@ void GrManager::drawAll()
 { 
   window -> clear();
   
-  for(Renderer* c: render)
-  {
-    c -> updatePosition();
-      if (c -> isVisible == true)
-        window -> draw(c -> shape);
-  }
+  for (int i = 0; i < render.size(); i++)
+    for (int j = maxLayer; j >= 1; j--)
+      if (render[i] -> layer == j) 
+      {
+        render[i] -> updatePosition();
+        if (render[i] -> isVisible == true)
+          window -> draw(render[i] -> shape);
+      }
 
   window -> display(); 
 } 
+
+
+
+
+

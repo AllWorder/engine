@@ -143,7 +143,7 @@ void Collider::elasticHit(Collider* source, Collider* obj2)
           float v2n_ = k*(v1n - v1n_) + v2n;
           source -> shape.velocityS[0] = v1n_*norm[0] + v1t*tau[0];
           source -> shape.velocityS[1] = v1n_*norm[1] + v1t*tau[1];
-          std::cout << "collision of player" << '\n';
+          
           obj2 -> shape.velocityS[0] = v2n_*norm[0] + v2t*tau[0];
           obj2 -> shape.velocityS[1] = v2n_*norm[1] + v2t*tau[1];
           
@@ -195,6 +195,38 @@ void Collider::inelasticHit(Collider* source, Collider* obj2)
         }
       }
 }
+
+bool Collider::checkCrossingBetweenPreviousTics(Collider* source, Collider* obj2)  //use it with checkCollision function
+{                                                                                  //source is fast, it hits obj2
+  std::vector<std::vector<float>> vert1 = this -> shape.vertex;
+  std::vector<std::vector<float>> vert2 = obj2 -> shape.vertex;
+
+  std::vector<float> v11 = {source -> objPointer -> x - source -> shape.velocityS[0], source -> objPointer -> y - source -> shape.velocityS[1]};
+  std::vector<float> v12 = {source -> objPointer -> x, source -> objPointer -> y};
+  std::vector<float> v21 = {obj2 -> objPointer -> x - obj2 -> shape.velocityS[0], obj2 -> objPointer -> y - obj2 -> shape.velocityS[1]};
+  std::vector<float> v22 = {obj2 -> objPointer -> x, obj2 -> objPointer -> y};
+  std::vector<float> c1 = {0, 0};
+  std::vector<float> c2 = {0, 0};
+  for (int i = 0; i < vert1.size(); i++)
+    for (int j = 0; j < vert2.size() - 1; j++)
+    {
+      v11 = {source->objPointer->x + vert1[i][0] - source->shape.velocityS[0], source->objPointer->y + vert1[i][1] - source->shape.velocityS[1]};
+      v12 = {source -> objPointer -> x + vert1[i][0], source -> objPointer -> y + vert1[i][1]};
+      v21 = {obj2->objPointer->x + vert2[j][0], obj2->objPointer->y + vert2[j][1]};
+      v22 = {obj2 -> objPointer -> x + vert2[j+1][0], obj2 -> objPointer -> y + vert2[j+1][1]};
+      if (checkCrossing(v11, v12, v21, v22, c1, c2))
+        return true;
+    }
+  return false;
+}
+
+
+
+
+
+
+
+
 
 
 

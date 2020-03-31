@@ -41,6 +41,7 @@ class Collider : public Component
   void resolveCollision(Collider* obj2, Singleton* sing);
   void elasticHit(Collider* source, Collider* obj2);
   void inelasticHit(Collider* source, Collider* obj2);
+  bool checkCrossingBetweenPreviousTics(Collider* source, Collider* obj2);
   
   Collider()
   {

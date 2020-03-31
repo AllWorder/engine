@@ -28,7 +28,6 @@ void BWCollided_player::collisionResolving(Collider* source, Collider* enemy)
 {
     //logics
 
-    //std::cout << "collision of player, converge" << '\n';
     if (source -> checkDiverge(enemy) == false)                            
     {
       

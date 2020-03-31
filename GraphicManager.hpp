@@ -14,6 +14,7 @@ class GrManager
     void clear();
   
     sf::RenderWindow* window;
+    int maxLayer = 10;
     std::vector<Renderer*> render;
 };
 

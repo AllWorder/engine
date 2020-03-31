@@ -8,6 +8,7 @@ class Renderer: public Component
     public:
 
         bool isVisible = true;
+        int layer = 1;
 
         int xSize = 50;
         int ySize = 50;

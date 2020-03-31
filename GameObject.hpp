@@ -25,6 +25,8 @@ class GameObject
         template <typename T>
         T* getComponent();
 
+        
+
 
         float x = 0;
         float y = 0;
@@ -116,6 +118,7 @@ T* GameObject::getComponent()
 
     return NULL;
 }
+
 
 
 #endif
