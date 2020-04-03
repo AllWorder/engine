@@ -13,10 +13,14 @@
 #include "PhysController.hpp"
 #include "PhysicScripts.hpp"
 
+#include "Animator.hpp"
+
 // for compilation use:
-//g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
+//g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp Animator.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
 
+Singleton* sing;
 
+#include "API.hpp"
 
 main()
 {  
@@ -25,9 +29,11 @@ main()
     GrManager graphicsManager;
     SController sc;
     PhysController physController;
+    AnimationConroller animationConroller;
+
     int timer = 0;
     
-    Singleton* sing;
+    //Singleton* sing;
     sing = sing -> getInstance();
     
     sing -> data = &data;
@@ -35,6 +41,7 @@ main()
     sing -> grManager = &graphicsManager;
     sing -> timer = &timer;
     sing -> physController = &physController;
+    sing -> animationConroller = &animationConroller;
 
     sing -> data -> createObjectInStorage("obj1"); //player 
     (data.getObject("obj1")) -> addComponent<Renderer>(sing);
@@ -68,7 +75,7 @@ main()
     sing -> data -> createObjectInStorage("wall2");
     (data.getObject("wall2")) -> addComponent<Collider>(sing);
     (data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifMoveable = false;
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifElastic = false;
+    //(data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifElastic = false;
     (data.getObject("wall2")) -> addComponent<BWCollided_wall>(sing);
     (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(-500, -280);
     (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(780, -280);
@@ -93,10 +100,10 @@ main()
     (data.getObject("wall4")) -> x = 500;
     (data.getObject("wall4")) -> y = -500;
 
-    sing -> data -> createObjectInStorage("obj2"); //player 
+    sing -> data -> createObjectInStorage("obj2"); 
     (data.getObject("obj2")) -> addComponent<Renderer>(sing);
     (data.getObject("obj2")) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
-    (data.getObject("obj2")) -> getComponent<Renderer>()->setSize(10, 10);
+    (data.getObject("obj2")) -> getComponent<Renderer>()->setSize(100, 100);
     (data.getObject("obj2")) -> addComponent<Collider>(sing);
     (data.getObject("obj2")) -> addComponent<BWCollided_player>(sing);
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
@@ -112,6 +119,40 @@ main()
 
     //sing -> data -> createObjectInStorage("spawner");
     //(data.getObject("spawner")) -> addComponent<MonsterSpawner>(sing);
+
+    API::createObject("bumbleBee");
+    API::getObject("bumbleBee") -> addComponent<Renderer>(sing);
+    API::getObject("bumbleBee") -> getComponent<Renderer>() -> loadTexture("resources/bb.png");
+    API::getObject("bumbleBee") -> getComponent<Renderer>() -> setSize(200, 200);
+    API::getObject("bumbleBee") -> x = 500;
+    API::getObject("bumbleBee") -> y = 500;
+
+    API::getObject("bumbleBee") -> addComponent<Animation>(sing);
+    API::getObject("bumbleBee") -> getComponent<Animation>() -> addTexture("resources/bb.png");
+    API::getObject("bumbleBee") -> getComponent<Animation>() -> addTexture("resources/bb1.png");
+    API::getObject("bumbleBee") -> getComponent<Animation>() -> addTexture("resources/bb2.png");
+    API::getObject("bumbleBee") -> getComponent<Animation>() -> addTexture("resources/bb3.png");
+    API::getObject("bumbleBee") -> getComponent<Animation>() -> ticksPerAnimation = 10;
+
+    API::createObject("background");
+    API::getObject("background") -> addComponent<Renderer>(sing);
+    API::getObject("background") -> getComponent<Renderer>() -> loadTexture("resources/background.jpg");
+    API::getObject("background") -> getComponent<Renderer>() -> setSize(SCREEN_X, SCREEN_Y);
+    API::getObject("background") -> x = SCREEN_X / 2;
+    API::getObject("background") -> y = SCREEN_Y / 2;
+    API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
+
+
+
+
+    
+
+    
+
+
+
+
+
 
 
 
@@ -152,6 +193,7 @@ main()
         //GRAPHICS:
 
         graphicsManager.drawAll();
+        animationConroller.doAllAnimations(sing);
     }
 
   //data.deleteObject("obj1");

@@ -9,6 +9,7 @@
 #include "Script.hpp"
 #include "PhysController.hpp"
 #include "Collider.hpp"
+#include "Animator.hpp"
 
 class GameObject
 {
@@ -76,7 +77,13 @@ bool GameObject::addComponent(Singleton* sing)
   {
     sing -> physController -> registerCollider(comp);
     return true;
-  }	
+  }
+
+  if (typeid(T).name() == typeid(Animation).name())
+  {
+    sing -> animationConroller -> registerAnimation(comp);
+    return true;
+  }		
 
   if ( (std::is_base_of<PhysicScript, T>::value) == 1 )
   {  	
@@ -103,6 +110,9 @@ void GameObject::deleteComponent(Singleton* sing)
 
       if (typeid(T).name() == typeid(Collider).name())
         sing -> physController -> unregisterCollider(comp);
+
+      if (typeid(T).name() == typeid(Animation).name())
+        sing -> animationConroller -> unregisterAnimation(comp);
 
       delete c;
       return;

@@ -17,6 +17,7 @@ class PhysController
   public:
 
     // collisions:
+    
     void registerCollider(Component* collider);
     void unregisterCollider(Component* collider);
     std::vector<Collider*> findCollisions();
@@ -25,6 +26,7 @@ class PhysController
     std::vector<Collider*> colliders;
 
     // physScripts:
+
     void registerPhysicScript(Component* physic);
     void unregisterPhysicScript(Component* physic);
     void doAllPhysics(Singleton* sing);

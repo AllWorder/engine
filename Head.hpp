@@ -44,6 +44,8 @@ class BWCollided_player;
 class BWCollided_wall;
 class PhysicScript;
 
+class Animation;
+class AnimationConroller;
 
 
 #endif
