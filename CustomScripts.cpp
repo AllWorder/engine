@@ -10,6 +10,7 @@
 #include "Collider.hpp"
 #include "PhysController.hpp"
 #include "PhysicScripts.hpp"
+//#include "API.hpp"
 
 void PlayerController::execute(Singleton* sing)
 {
@@ -47,7 +48,7 @@ void MonsterSpawner::execute(Singleton* sing)
 {
   if (*(sing -> timer) % 100 == 0)
   {
-    int monsterID = *(sing -> timer);
+    int monsterID = rand() % 10;
     std::string monsterName = "monster";
     monsterName.append(std::to_string(monsterID)); //giving monster unique name
     std::cout << "spawned " << monsterName << '\n';
@@ -58,7 +59,7 @@ void MonsterSpawner::execute(Singleton* sing)
       sing -> data -> getObject(monsterName)-> y = rand() % 600;
       sing -> data -> getObject(monsterName) -> addComponent<Renderer>(sing);
       sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
-      sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->setSize(10, 10);
+      sing -> data -> getObject(monsterName) -> getComponent<Renderer>()->setSize(100, 100);
       sing -> data -> getObject(monsterName) -> addComponent<Collider>(sing);
       sing -> data -> getObject(monsterName) -> addComponent<BWCollided_player>(sing);
       sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
@@ -68,6 +69,7 @@ void MonsterSpawner::execute(Singleton* sing)
       sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.setVelocity(rand() % 10, rand () % 10); 
       sing -> data -> getObject(monsterName) -> addComponent<VelocityPhysic>(sing);
       std::cout << "already spawned " << monsterName << '\n';
+      sing -> data -> getObject(monsterName) -> getComponent<Collider>() -> shape.mass = 0.3;
 
     }
 

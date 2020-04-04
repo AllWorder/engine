@@ -115,10 +115,10 @@ main()
     (data.getObject("obj2")) -> y = 330;
     (data.getObject("obj2")) -> getComponent<Collider>() -> shape.setVelocity(5, 0); 
     (data.getObject("obj2")) -> addComponent<VelocityPhysic>(sing);
-    (data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
+    //(data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
 
-    //sing -> data -> createObjectInStorage("spawner");
-    //(data.getObject("spawner")) -> addComponent<MonsterSpawner>(sing);
+    sing -> data -> createObjectInStorage("spawner");
+    (data.getObject("spawner")) -> addComponent<MonsterSpawner>(sing);
 
     API::createObject("bumbleBee");
     API::getObject("bumbleBee") -> addComponent<Renderer>(sing);
