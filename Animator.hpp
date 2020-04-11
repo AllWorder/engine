@@ -27,7 +27,9 @@ class Animation: public Component
 class AnimationConroller
 {
     public:
-
+        
+        AnimationConroller()
+        {}
         void registerAnimation(Component* animation);
         void unregisterAnimation(Component* animation);
         

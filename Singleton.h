@@ -3,6 +3,7 @@
 
 #include "Head.hpp"
 
+
 class Singleton 
 {
   private:

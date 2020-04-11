@@ -26,6 +26,12 @@ void resolveInelasticHit(std::vector<float> norm, Collider* source, Collider* ob
     source -> shape.velocityS[0] = (v2n) *norm[0] + v1t*tau[0];
     source -> shape.velocityS[1] = (v2n) *norm[1] + v1t*tau[1];
   }
+  
+  if ((obj2 -> shape.ifMoveable == true) and (source -> shape.ifMoveable == false))
+  {
+    obj2 -> shape.velocityS[0] = (v1n) *norm[0] + v2t*tau[0];
+    obj2 -> shape.velocityS[1] = (v1n) *norm[1] + v2t*tau[1];
+  }
 
   if ((obj2 -> shape.ifMoveable == true) and (source -> shape.ifMoveable == true))
   {
@@ -52,6 +58,7 @@ void resolveElasticHit(std::vector<float> norm, Collider* source, Collider* obj2
   float k = source -> shape.mass / obj2 -> shape.mass;
   if (obj2 -> shape.ifMoveable == false)
     k = 0;
+  
   float a = k+1;
   float b = -2*v2n - 2*k*v1n;
   float c = (k-1)*v1n*v1n + 2*v1n*v2n;
@@ -69,8 +76,13 @@ void resolveElasticHit(std::vector<float> norm, Collider* source, Collider* obj2
     source -> shape.velocityS[1] = v1n_*norm[1] + v1t*tau[1];
           
     obj2 -> shape.velocityS[0] = v2n_*norm[0] + v2t*tau[0];
-    obj2 -> shape.velocityS[1] = v2n_*norm[1] + v2t*tau[1];
-          
+    obj2 -> shape.velocityS[1] = v2n_*norm[1] + v2t*tau[1];        
+  }
+  
+  if (source -> shape.ifMoveable == false)
+  {
+    obj2 -> shape.velocityS[0] = 2*(v1n) *norm[0] + v2t*tau[0];
+    obj2 -> shape.velocityS[1] = 2*(v1n) *norm[1] + v2t*tau[1];
   }
 }
  
@@ -201,10 +213,13 @@ bool Collider::checkDiverge(Collider* obj2)
 
 void Collider::resolveCollision(Collider* obj2, Singleton* sing)
 {
-  if (this -> objPointer -> getComponent<BWCollided_player>())
-    this -> objPointer -> getComponent<BWCollided_player>() -> collisionResolving(this, obj2);
-  if (this -> objPointer -> getComponent<BWCollided_wall>())
-    this -> objPointer -> getComponent<BWCollided_wall>() -> collisionResolving(this, obj2);
+  if (this -> checkDiverge(obj2) == false)                            
+    {
+      if ((obj2 -> shape.ifElastic == true) and (this -> shape.ifElastic == true))
+        this -> elasticHit(this, obj2);
+      else
+        this -> inelasticHit(this, obj2);
+    }
 }
 
 void Collider::elasticHit(Collider* source, Collider* obj2)

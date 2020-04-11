@@ -1,6 +1,6 @@
 #include "Head.hpp"
 
-#include "Singleton.h"
+
 #include "Script.hpp"
 #include "GraphicManager.hpp"
 #include "ScriptController.hpp"
@@ -12,113 +12,97 @@
 #include "Collider.hpp"
 #include "PhysController.hpp"
 #include "PhysicScripts.hpp"
-
 #include "Animator.hpp"
+#include "Singleton.h"
+Singleton* sing;
+#include "gameRun.hpp"
 
 // for compilation use:
 //g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp Animator.cpp -o test.app -lsfml-graphics -lsfml-window -lsfml-system
 
-Singleton* sing;
+
 
 #include "API.hpp"
 
 main()
-{  
-    
-    DataStorage data;
-    GrManager graphicsManager;
-    SController sc;
-    PhysController physController;
-    AnimationConroller animationConroller;
-
-    int timer = 0;
-    
-    //Singleton* sing;
+{ 
     sing = sing -> getInstance();
-    
-    sing -> data = &data;
-    sing -> sc = &sc;
-    sing -> grManager = &graphicsManager;
-    sing -> timer = &timer;
-    sing -> physController = &physController;
-    sing -> animationConroller = &animationConroller;
+    API::createObject("obj1"); //player 
+    API::getObject("obj1") -> addComponent<Renderer>(sing);
+    API::getObject("obj1") -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
+    API::getObject("obj1") -> getComponent<Renderer>()->setSize(100, 100);
+    API::getObject("obj1") -> addComponent<Collider>(sing);
+    API::getObject("obj1") -> addComponent<BWCollided_player>(sing);
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(-50, -50);
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(50, -49);
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(49, 50);
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(-49, 49);
+    API::getObject("obj1") -> x = 500;
+    API::getObject("obj1") -> y = 360;
 
-    sing -> data -> createObjectInStorage("obj1"); //player 
-    (data.getObject("obj1")) -> addComponent<Renderer>(sing);
-    (data.getObject("obj1")) -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
-    (data.getObject("obj1")) -> getComponent<Renderer>()->setSize(100, 100);
-    (data.getObject("obj1")) -> addComponent<Collider>(sing);
-    (data.getObject("obj1")) -> addComponent<BWCollided_player>(sing);
-    (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
-    (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(50, -49);
-    (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(49, 50);
-    (data.getObject("obj1")) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
-    (data.getObject("obj1")) -> x = 500;
-    (data.getObject("obj1")) -> y = 360;
-
-    (data.getObject("obj1")) -> addComponent<PlayerController>(sing);
-    (data.getObject("obj1")) -> addComponent<VelocityPhysic>(sing);
-    (data.getObject("obj1")) -> addComponent<GravitationPhysic>(sing);
+    API::getObject("obj1") -> addComponent<PlayerController>(sing);
+    API::getObject("obj1") -> addComponent<VelocityPhysic>(sing);
+    API::getObject("obj1") -> addComponent<GravitationPhysic>(sing);
 
 
 
 
-    sing -> data -> createObjectInStorage("wall1");
-    (data.getObject("wall1")) -> addComponent<Collider>(sing);
-    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.ifMoveable = false;
-    (data.getObject("wall1")) -> addComponent<BWCollided_wall>(sing);
-    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(500, -500);
-    (data.getObject("wall1")) -> getComponent<Collider>() -> shape.addVertex(500, 220);
-    (data.getObject("wall1")) -> x = -500;
-    (data.getObject("wall1")) -> y = 500;
+    API::createObject("wall1");
+    API::getObject("wall1") -> addComponent<Collider>(sing);
+    API::getObject("wall1") -> getComponent<Collider>() -> shape.ifMoveable = false;
+    API::getObject("wall1") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall1") -> getComponent<Collider>() -> shape.addVertex(500, -500);
+    API::getObject("wall1") -> getComponent<Collider>() -> shape.addVertex(500, 220);
+    API::getObject("wall1") -> x = -500;
+    API::getObject("wall1") -> y = 500;
 
-    sing -> data -> createObjectInStorage("wall2");
-    (data.getObject("wall2")) -> addComponent<Collider>(sing);
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifMoveable = false;
+    API::createObject("wall2");
+    API::getObject("wall2") -> addComponent<Collider>(sing);
+    API::getObject("wall2") -> getComponent<Collider>() -> shape.ifMoveable = false;
     //(data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifElastic = false;
-    (data.getObject("wall2")) -> addComponent<BWCollided_wall>(sing);
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(-500, -280);
-    (data.getObject("wall2")) -> getComponent<Collider>() -> shape.addVertex(780, -280);
-    (data.getObject("wall2")) -> x = 500;
-    (data.getObject("wall2")) -> y = 1000;
+    API::getObject("wall2") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall2") -> getComponent<Collider>() -> shape.addVertex(-500, -280);
+    API::getObject("wall2") -> getComponent<Collider>() -> shape.addVertex(780, -280);
+    API::getObject("wall2") -> x = 500;
+    API::getObject("wall2") -> y = 1000;
 
-    sing -> data -> createObjectInStorage("wall3");
-    (data.getObject("wall3")) -> addComponent<Collider>(sing);
-    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.ifMoveable = false;
-    (data.getObject("wall3")) -> addComponent<BWCollided_wall>(sing);
-    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(-720, 220);
-    (data.getObject("wall3")) -> getComponent<Collider>() -> shape.addVertex(-720, -500);
-    (data.getObject("wall3")) -> x = 2000;
-    (data.getObject("wall3")) -> y = 500;
+    API::createObject("wall3");
+    API::getObject("wall3") -> addComponent<Collider>(sing);
+    API::getObject("wall3") -> getComponent<Collider>() -> shape.ifMoveable = false;
+    API::getObject("wall3") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall3") -> getComponent<Collider>() -> shape.addVertex(-720, 220);
+    API::getObject("wall3") -> getComponent<Collider>() -> shape.addVertex(-720, -500);
+    API::getObject("wall3") -> x = 2000;
+    API::getObject("wall3") -> y = 500;
 
-    sing -> data -> createObjectInStorage("wall4");
-    (data.getObject("wall4")) -> addComponent<Collider>(sing);
-    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.ifMoveable = false;
-    (data.getObject("wall4")) -> addComponent<BWCollided_wall>(sing);
-    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(-500, 500);
-    (data.getObject("wall4")) -> getComponent<Collider>() -> shape.addVertex(780, 500);
-    (data.getObject("wall4")) -> x = 500;
-    (data.getObject("wall4")) -> y = -500;
+    API::createObject("wall4");
+    API::getObject("wall4") -> addComponent<Collider>(sing);
+    API::getObject("wall4") -> getComponent<Collider>() -> shape.ifMoveable = false;
+    API::getObject("wall4") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall4") -> getComponent<Collider>() -> shape.addVertex(-500, 500);
+    API::getObject("wall4") -> getComponent<Collider>() -> shape.addVertex(780, 500);
+    API::getObject("wall4") -> x = 500;
+    API::getObject("wall4") -> y = -500;
 
-    sing -> data -> createObjectInStorage("obj2"); 
-    (data.getObject("obj2")) -> addComponent<Renderer>(sing);
-    (data.getObject("obj2")) -> getComponent<Renderer>()->loadTexture("resources/monster.png");
-    (data.getObject("obj2")) -> getComponent<Renderer>()->setSize(100, 100);
-    (data.getObject("obj2")) -> addComponent<Collider>(sing);
-    (data.getObject("obj2")) -> addComponent<BWCollided_player>(sing);
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-50, -50);
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.mass = 0.3;
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(50, -49);
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(49, 50);
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.addVertex(-49, 49);
-    (data.getObject("obj2")) -> x = 300;
-    (data.getObject("obj2")) -> y = 330;
-    (data.getObject("obj2")) -> getComponent<Collider>() -> shape.setVelocity(5, 0); 
-    (data.getObject("obj2")) -> addComponent<VelocityPhysic>(sing);
+    API::createObject("obj2"); 
+    API::getObject("obj2") -> addComponent<Renderer>(sing);
+    API::getObject("obj2") -> getComponent<Renderer>()->loadTexture("resources/monster.png");
+    API::getObject("obj2") -> getComponent<Renderer>()->setSize(100, 100);
+    API::getObject("obj2") -> addComponent<Collider>(sing);
+    API::getObject("obj2") -> addComponent<BWCollided_player>(sing);
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(-50, -50);
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.mass = 0.3;
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(50, -49);
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(49, 50);
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(-49, 49);
+    API::getObject("obj2") -> x = 300;
+    API::getObject("obj2") -> y = 330;
+    API::getObject("obj2") -> getComponent<Collider>() -> shape.setVelocity(5, 0); 
+    API::getObject("obj2") -> addComponent<VelocityPhysic>(sing);
     //(data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
 
-    sing -> data -> createObjectInStorage("spawner");
-    (data.getObject("spawner")) -> addComponent<MonsterSpawner>(sing);
+    //API::createObject("spawner");
+    //API::getObject("spawner") -> addComponent<MonsterSpawner>(sing);
 
     API::createObject("bumbleBee");
     API::getObject("bumbleBee") -> addComponent<Renderer>(sing);
@@ -145,55 +129,9 @@ main()
 
 
 
-    
-
-    
-
-
-
-
-
-
-
-
-
-    
-    
-
-    sf::Event event;
-
-    int i = 1;
-
-    while ((graphicsManager.window) -> isOpen())
+    while (gameRun())
     {
-        timer++;
-        //PHISICS: 
-
-        physController.resolveCollisions(physController.findCollisions(), sing);
-        physController.doAllPhysics(sing);
-
-
-        //EVENT HANDLER
-
-        while ((graphicsManager.window) -> pollEvent(event))
-		{
-		    if (event.type == sf::Event::Closed) 
-                  (graphicsManager.window) -> close();
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            (graphicsManager.window) -> close();
-
-        //LOGICS:
-        
-         
-		
-		sc.doAllScripts(sing);
-
-        //GRAPHICS:
-
-        graphicsManager.drawAll();
-        animationConroller.doAllAnimations(sing);
+      //YOUR CODE AND LOGICS HERE
     }
 
   //data.deleteObject("obj1");

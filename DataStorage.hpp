@@ -17,7 +17,8 @@ class DataStorage
 
         bool createObjectInStorage(std::string name);
 
-    
+        DataStorage()
+        {}
 
         std::map <std::string, GameObject> objects;
 

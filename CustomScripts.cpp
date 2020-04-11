@@ -29,14 +29,7 @@ void BWCollided_player::collisionResolving(Collider* source, Collider* enemy)
 {
     //logics
 
-    if (source -> checkDiverge(enemy) == false)                            
-    {
-      
-      if ((enemy -> shape.ifElastic == true) and (source -> shape.ifElastic == true))
-        source -> elasticHit(source, enemy);
-      else
-        source -> inelasticHit(source, enemy);
-    }
+    return;
 }
 
 void BWCollided_wall::collisionResolving(Collider* source, Collider* enemy)
