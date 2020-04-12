@@ -1,5 +1,5 @@
-#ifndef API
-#define API
+#ifndef API_
+#define API_
 
 #include "Head.hpp"
 
@@ -24,6 +24,7 @@ namespace API
     void createObject(std::string name);
     void deleteObject(std::string name);
     GameObject* getObject(std::string name);
+    void setSquareVertexes(std::string name, int xSize, int ySize);
 
 
     void createObject(std::string name)
@@ -39,6 +40,25 @@ namespace API
     GameObject* getObject(std::string name)
     {
         return sing -> data -> getObject(name);
+    }
+
+    void setSquareVertexes(std::string name, int xSize, int ySize)
+    {
+        if(GameObject* obj = API::getObject(name))
+        {
+            if(obj -> getComponent<Collider>())
+            {
+                API::getObject(name) -> getComponent<Collider>() -> shape.addVertex(-xSize / 2, -ySize / 2);
+                API::getObject(name) -> getComponent<Collider>() -> shape.addVertex(xSize / 2, -ySize / 2);
+                API::getObject(name) -> getComponent<Collider>() -> shape.addVertex(xSize / 2, ySize / 2);
+                API::getObject(name) -> getComponent<Collider>() -> shape.addVertex(-xSize / 2, ySize / 2);
+            }
+            else
+            {
+                std::cout << "GameObject " << name << " must have a collider" << '\n';
+            }
+            
+        }
     }
 
 }

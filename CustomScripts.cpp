@@ -39,7 +39,7 @@ void BWCollided_wall::collisionResolving(Collider* source, Collider* enemy)
 
 void MonsterSpawner::execute(Singleton* sing)
 {
-  if (*(sing -> timer) % 100 == 0)
+  if ((rand()) % 100 == 0)
   {
     int monsterID = rand() % 10;
     std::string monsterName = "monster";

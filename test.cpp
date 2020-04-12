@@ -18,8 +18,9 @@ Singleton* sing;
 #include "gameRun.hpp"
 
 // for compilation use:
-//g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp Animator.cpp -o test.app -lsfml-graphics -lsfml-window -lsfml-system
-
+//g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp Animator.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
+// after use:
+// ./test
 
 
 #include "API.hpp"
@@ -27,16 +28,14 @@ Singleton* sing;
 main()
 { 
     sing = sing -> getInstance();
+
     API::createObject("obj1"); //player 
     API::getObject("obj1") -> addComponent<Renderer>(sing);
     API::getObject("obj1") -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
     API::getObject("obj1") -> getComponent<Renderer>()->setSize(100, 100);
     API::getObject("obj1") -> addComponent<Collider>(sing);
     API::getObject("obj1") -> addComponent<BWCollided_player>(sing);
-    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(-50, -50);
-    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(50, -49);
-    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(49, 50);
-    API::getObject("obj1") -> getComponent<Collider>() -> shape.addVertex(-49, 49);
+    API::setSquareVertexes("obj1", 100, 100);
     API::getObject("obj1") -> x = 500;
     API::getObject("obj1") -> y = 360;
 
@@ -101,8 +100,8 @@ main()
     API::getObject("obj2") -> addComponent<VelocityPhysic>(sing);
     //(data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
 
-    //API::createObject("spawner");
-    //API::getObject("spawner") -> addComponent<MonsterSpawner>(sing);
+    API::createObject("spawner");
+    API::getObject("spawner") -> addComponent<MonsterSpawner>(sing);
 
     API::createObject("bumbleBee");
     API::getObject("bumbleBee") -> addComponent<Renderer>(sing);
@@ -134,6 +133,5 @@ main()
       //YOUR CODE AND LOGICS HERE
     }
 
-  //data.deleteObject("obj1");
   sing -> deleteInstance();       
 }
