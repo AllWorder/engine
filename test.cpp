@@ -100,8 +100,8 @@ main()
     API::getObject("obj2") -> addComponent<VelocityPhysic>(sing);
     //(data.getObject("obj2")) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
 
-    API::createObject("spawner");
-    API::getObject("spawner") -> addComponent<MonsterSpawner>(sing);
+    //API::createObject("spawner");
+    //API::getObject("spawner") -> addComponent<MonsterSpawner>(sing);
 
     API::createObject("bumbleBee");
     API::getObject("bumbleBee") -> addComponent<Renderer>(sing);
