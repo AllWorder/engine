@@ -71,31 +71,31 @@ g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp S
 
 
 ## GameObject
-* хранит в себе координаты float x, y (центр объекта, если есть размер)
-* имеет имя std::string name, его-то мы и задавали при создании
+* хранит в себе координаты float **x, y** (центр объекта, если есть размер)
+* имеет имя std::string **name**, его-то мы и задавали при создании
 * хранит приватный вектор компонент
 
 
 ## Renderer
-* хранит текстуру sf::Texture texture, её можно загрузить и сразу применить при помощи:
-* void loadTexture(std::string imagePath), где imagePath - путь до картинки
+* хранит текстуру **sf::Texture texture**, её можно загрузить и сразу применить при помощи:
+* void **loadTexture(std::string imagePath)**, где imagePath - путь до картинки
 ```
 API::getObject("obj1") -> getComponent<Renderer>() -> loadTexture("resources/opexus.png");
 лучше хранить все текстуры в специальной папке resources
 ```
-* void setTexture(sf::Texture* newTexture), меняет текстуру по указателю newTexture
-* Renderer хранит размеры текстур int xSize, ySize
-* void setSize(int xLen, int yLen), задаёт размеры текстуры
+* void **setTexture(sf::Texture* newTexture)**, меняет текстуру по указателю newTexture
+* Renderer хранит размеры текстур int **xSize, ySize**
+* void **setSize(int xLen, int yLen)**, задаёт размеры текстуры
 ```
 API::getObject("obj1") -> getComponent<Renderer>() -> setSize(100, 100);
 теперь на объект натянута картинка 100 на 100
 ```
-* int layer, отвечает за слой. По умолчанию 1. Слои от 0 до 10. Слои с меньшим числом перекрывают слои с большим.
+* int **layer**, отвечает за слой. По умолчанию 1. Слои от 0 до 10. Слои с меньшим числом перекрывают слои с большим.
 ```
 API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
 увели фон на задний слой, чтобы он не перекрывал игрока с layer = 1
 ```
-* bool isVisible отвечает за то, будет ли объект отрисовываться или нет
+* bool **isVisible** отвечает за то, будет ли объект отрисовываться или нет
 
 ## Collider
 ```
@@ -107,7 +107,7 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
   std::vector<float> velocityS = {0, 0}; вектор скоростей
   std::vector<std::vector <float>> vertex; вектор вершин, образающий замкнутый многоугольник
  ```
- * void addVertex(float x, float y) добавляет вершину в локульных координатых, где центр имеет координаты (0, 0)
+ * **void addVertex(float x, float y)** добавляет вершину в локульных координатых, где центр имеет координаты (0, 0)
  ```
     API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(-50, -50);
     API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(50, -50);
@@ -115,8 +115,8 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
     API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(-50, 50);
     по факту задали вершины квадрата размером 100 на 100 в локульных координатах
  ```
- * **не пугайтесь, если не поняли предыдущий пункт, есть метод попроще для прямоугольников**
- * void setSquareVertexes(std::string name, int xSize, int ySize) делает прямоугольных хитбокс объекту с именем name.
+ * **НЕ ПУГАЙТЕСЬ, если не поняли предыдущий пункт, есть метод попроще для прямоугольников**
+ * void **setSquareVertexes(std::string name, int xSize, int ySize)** делает прямоугольных хитбокс объекту с именем name.
  ```
  API::setSquareVertexes("obj2", 100, 100);
  
@@ -124,16 +124,16 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
  однако данная функция только для прямоугольников (кому-то от жизни надо больше!?)
  для произвольных замкнутых многоугольников используйте ручное задание вершин в локальных координатах
  ```
- * void setVelocity(float vx, float vy), задаёт скорость объекту
+ * void **setVelocity(float vx, float vy)**, задаёт скорость объекту
  ```
  API::getObject("obj2") -> getComponent<Collider>() -> shape.setVelocity(5, 0);
  ```
  
  
  ## Animator
-* int ticksPerAnimation = 30, количество тиков для смены анимации на другую
-* void addTexture(std::string texturePath) добавление тектуры в массив текстур для анимаций по пути до файла texturePath
-* void deleteTexture(std::string texturePath) удаление
+* int **ticksPerAnimation** = 30, количество тиков для смены анимации на другую
+* void **addTexture(std::string texturePath)** добавление тектуры в массив текстур для анимаций по пути до файла texturePath
+* void **deleteTexture(std::string texturePath)** удаление
 ```
     API::getObject("bumbleBee") -> addComponent<Animation>(sing);
     API::getObject("bumbleBee") -> getComponent<Animation>() -> addTexture("resources/bb.png");
@@ -148,7 +148,7 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
 
 
 ## CustomScripts, создание 
-* для создания своего скрипта пропишите его описание в CustomScripts.hpp
+* для создания своего скрипта пропишите его описание в **CustomScripts.hpp**
 ```
 class PlayerController: public Script // ОБЯЗАТЕЛЬНО НАСЛЕДОВАНИЕ ОТ SCRIPT!
 {
@@ -163,7 +163,7 @@ class PlayerController: public Script // ОБЯЗАТЕЛЬНО НАСЛЕДОВ
 
 };
 ```
-* описание execute() у нас принято писать в CustomScripts.cpp
+* описание **execute()** у нас принято писать в **CustomScripts.cpp**
 ```
 void PlayerController::execute(Singleton* sing)
 {
@@ -188,7 +188,7 @@ API::getObject("player") -> addComponent<PlayerController>(sing);
 ```
 
 ## PhysicScripts, создание
-* здесь всё очень похоже на обычные скрипты только всё происходит в PhysicScripts.hpp
+* здесь всё очень похоже на обычные скрипты только всё происходит в **PhysicScripts.hpp**
 * cpp по умолчанию нет, но вы его можете добавить сами
 ```
 class GravitationPhysic: public PhysicScript // ОБЯЗАТЕЛЬНО НАСЛЕДОВАНИЕ ОТ PhysicScript 
