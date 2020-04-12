@@ -128,6 +128,8 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
  ```
  API::getObject("obj2") -> getComponent<Collider>() -> shape.setVelocity(5, 0);
  ```
+ * замечание про удары: все объекты имеющие коллайдер, будут расталкиваться упруго, если они оба упругие, неупруго, если хотя бы один из них неупругий, и если хотя бы у одного проставлено ifMoveable = true.
+Если ifMoveable = false, то это соответствует объекту с бесконечной массой
  
  
  ## Animator
