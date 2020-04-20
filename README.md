@@ -101,14 +101,17 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
 
 ## Collider
 ```
-  bool ifCollideable = true; будет ли объект сталкиваться с другими
-  bool ifMoveable = true; будет ли обрабатываться движение объекта
-  bool ifElastic = true; для ударов. Упругий или неупругий
-  bool ifCircle = false; true заставит его вести себя физически как круг с радиусом r
-  float mass = 10; масса для рассталкивания по импульсу
-  float r = 1;
-  std::vector<float> velocityS = {0, 0}; вектор скоростей
-  std::vector<std::vector <float>> vertex; вектор вершин, образающий замкнутый многоугольник
+  class Shape
+  {
+    bool ifCollideable = true; будет ли объект сталкиваться с другими
+    bool ifMoveable = true; будет ли обрабатываться движение объекта
+    bool ifElastic = true; для ударов. Упругий или неупругий
+    bool ifCircle = false; true заставит его вести себя физически как круг с радиусом r
+    float mass = 10; масса для рассталкивания по импульсу
+    float r = 1;
+    std::vector<float> velocityS = {0, 0}; вектор скоростей
+    std::vector<std::vector <float>> vertex; вектор вершин, образающий замкнутый многоугольник
+  }
  ```
  * **void addVertex(float x, float y)** добавляет вершину в локальных координатых, где центр имеет координаты (0, 0)
  ```
@@ -131,8 +134,16 @@ API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
  ```
  API::getObject("obj2") -> getComponent<Collider>() -> shape.setVelocity(5, 0);
  ```
- * замечание про удары: все объекты имеющие коллайдер, будут расталкиваться упруго, если они оба упругие, неупруго, если хотя бы один из них неупругий, и если хотя бы у одного проставлено ifMoveable = true.
-Если ifMoveable = false, то это соответствует объекту с бесконечной массой. Два объекта с бесконечными массами удару не подвергаются.
+ * bool **checkCrossingBetweenPreviousTics(Collider* source, Collider* obj2)**, помогает узнать, столкнулись ли быстро движущиеся объекты, например, пуля и игрок, или маленькие объекты (расстояние пролёта между тиками больше размера объекта).
+  ```
+ Collider* collider1 = API::getObject("obj1") -> getComponent<Collider>();
+ Collider* collider2 = API::getObject("obj2") -> getComponent<Collider>();
+ collider1 -> checkCrossingBetweenPreviousTics(collider1, collider2);   // true/false
+ ```
+ Стоит заметить, что функция работает корректно, если рассматривается столкновение быстрого объекта с медленным. Единица времени (dT)=1, так что если планируете использовать эту функцию в программе примите шаг времени равным единице.
+ 
+ * замечание про удары: все объекты имеющие коллайдер и с пометками ifCollideable = true у обоих, будут расталкиваться упруго, если они оба упругие, неупруго, если хотя бы один из них неупругий, и если хотя бы у одного проставлено ifMoveable = true.
+Если ifMoveable = false, то это соответствует объекту с бесконечной массой. Два объекта с бесконечными массами удару не подвергаются. Некоторые методы принадлежат структуре shape в Collider, так что будьте аккуратны. 
  
  
  ## Animator
