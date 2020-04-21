@@ -8,6 +8,7 @@ class ObjShape
 {
   public:
   bool ifMoveable = true;
+  bool ifCollideable = true;
   bool ifElastic = true;
   bool ifCircle = false;
   float mass = 10;

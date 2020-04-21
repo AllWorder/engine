@@ -25,6 +25,7 @@ namespace API
     void deleteObject(std::string name);
     GameObject* getObject(std::string name);
     void setSquareVertexes(std::string name, int xSize, int ySize);
+    std::vector<Collider*> getAllCollisions(sing);
 
 
     void createObject(std::string name)
@@ -59,6 +60,11 @@ namespace API
             }
             
         }
+    }
+
+    std::vector<Collider*> getAllCollisions(sing)
+    {
+      return sing -> physController -> findCollisions();
     }
 
 }

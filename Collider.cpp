@@ -213,6 +213,8 @@ bool Collider::checkDiverge(Collider* obj2)
 
 void Collider::resolveCollision(Collider* obj2, Singleton* sing)
 {
+  if ((this -> shape.ifCollideable == false) or (obj2 -> shape.ifCollideable == false))
+    return;
   if (this -> checkDiverge(obj2) == false)                            
     {
       if ((obj2 -> shape.ifElastic == true) and (this -> shape.ifElastic == true))
