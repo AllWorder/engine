@@ -45,3 +45,5 @@ void Singleton::deleteInstance()
 }
 
 Singleton* Singleton::instance = 0;
+
+

@@ -1,6 +1,8 @@
 #ifndef GAME_RUN
 #define GAME_RUN
 
+
+
 bool gameRun()
 {
   sf::Event event;

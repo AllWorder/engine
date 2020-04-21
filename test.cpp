@@ -35,7 +35,10 @@ main()
     API::getObject("obj1") -> getComponent<Renderer>()->setSize(100, 100);
     API::getObject("obj1") -> addComponent<Collider>(sing);
     API::getObject("obj1") -> addComponent<BWCollided_player>(sing);
-    API::setSquareVertexes("obj1", 100, 100);
+    
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.ifCircle = true;
+    API::getObject("obj1") -> getComponent<Collider>() -> shape.r = 50;
+    //API::setSquareVertexes("obj1", 100, 100);
     API::getObject("obj1") -> x = 500;
     API::getObject("obj1") -> y = 360;
 

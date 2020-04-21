@@ -27,4 +27,6 @@ class Singleton
     static void deleteInstance();
 };
 
+
+
 #endif
