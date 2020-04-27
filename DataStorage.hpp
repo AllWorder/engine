@@ -16,6 +16,10 @@ class DataStorage
         std::map<std::string, GameObject>* getAllObjects();
 
         bool createObjectInStorage(std::string name);
+       
+        void save(std::string name);
+   
+        void read(std::string name);
 
         DataStorage()
         {}

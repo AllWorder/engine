@@ -33,10 +33,29 @@ void Renderer::loadTexture(std::string imagePath)
 {
     if (!texture.loadFromFile(imagePath))
     {
-        std::cout << "Loading texture erorr" << "\n";
+        std::cout << "Loading texture erorr" << '\n';
         return;
     }
-
+    path = imagePath;
     texture.setSmooth(true);
     shape.setTexture(&texture);    
 }
+
+std::string Renderer::writeDown()
+{
+  std::string s = "***Renderer";
+  s += '\n';
+  s += BTS(isVisible);
+  s += '\n';
+  s += std::to_string(layer);
+  s += '\n';
+  s += std::to_string(xSize);
+  s += '\n';
+  s += std::to_string(ySize);
+  s += '\n';
+  s += path;
+  s += '\n';
+  return s;
+}
+
+

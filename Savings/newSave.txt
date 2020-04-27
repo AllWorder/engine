@@ -1,0 +1,134 @@
+###background
+640
+360
+***Renderer
+true
+3
+1280
+720
+resources/background.jpg
+###bumbleBee
+500
+500
+***Renderer
+true
+1
+200
+200
+resources/bb.png
+***Animation
+10
+0
+0
+resources/bb.png
+resources/bb1.png
+resources/bb2.png
+resources/bb3.png
+###obj1
+500
+360
+***Renderer
+true
+1
+100
+100
+resources/opexus.png
+***Collider
+true
+true
+true
+true
+10.000000
+50.000000
+0.000000
+0.000000
+***17BWCollided_player
+***16PlayerController
+***14VelocityPhysic
+true
+***17GravitationPhysic
+###obj2
+300
+330
+***Renderer
+true
+1
+100
+100
+resources/monster.png
+***Collider
+true
+true
+true
+false
+0.300000
+1.000000
+5.000000
+0.000000
+-50.000000 -50.000000
+50.000000 -49.000000
+49.000000 50.000000
+-49.000000 49.000000
+***17BWCollided_player
+***14VelocityPhysic
+true
+###wall1
+-500
+500
+***Collider
+false
+true
+true
+false
+10.000000
+1.000000
+0.000000
+0.000000
+500.000000 -500.000000
+500.000000 220.000000
+***15BWCollided_wall
+###wall2
+500
+1000
+***Collider
+false
+true
+true
+false
+10.000000
+1.000000
+0.000000
+0.000000
+-500.000000 -280.000000
+780.000000 -280.000000
+***15BWCollided_wall
+###wall3
+2000
+500
+***Collider
+false
+true
+true
+false
+10.000000
+1.000000
+0.000000
+0.000000
+-720.000000 220.000000
+-720.000000 -500.000000
+***15BWCollided_wall
+###wall4
+500
+-500
+***Collider
+false
+true
+true
+false
+10.000000
+1.000000
+0.000000
+0.000000
+-500.000000 500.000000
+780.000000 500.000000
+***15BWCollided_wall

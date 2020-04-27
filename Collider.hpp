@@ -43,7 +43,8 @@ class Collider : public Component
   void elasticHit(Collider* source, Collider* obj2);
   void inelasticHit(Collider* source, Collider* obj2);
   bool checkCrossingBetweenPreviousTics(Collider* source, Collider* obj2);
-  
+  std::string writeDown();  
+
   Collider()
   {
     this -> name = typeid(Collider).name();

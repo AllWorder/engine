@@ -342,7 +342,32 @@ bool Collider::checkCrossingBetweenPreviousTics(Collider* source, Collider* obj2
   return false;
 }
 
+std::string Collider::writeDown()
+{
+  std::string s = "***Collider";
+  s += '\n';
+  s += BTS(this -> shape.ifMoveable);
+  s += '\n';
+  s += BTS(this -> shape.ifCollideable);
+  s += '\n';
+  s += BTS(this -> shape.ifElastic);
+  s += '\n';
+  s += BTS(this -> shape.ifCircle);
+  s += '\n';
+  s += std::to_string(shape.mass);
+  s += '\n';
+  s += std::to_string(shape.r);
+  s += '\n';
+  s += std::to_string(shape.velocityS[0]);
+  s += '\n';
+  s += std::to_string(shape.velocityS[1]);
+  s += '\n';
 
+  for (std::vector<float> v: this -> shape.vertex)
+    s += std::to_string(v[0]) + " " + std::to_string(v[1]) + '\n';
+
+  return s;
+}
 
 
 

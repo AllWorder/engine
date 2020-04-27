@@ -39,7 +39,7 @@ class GameObject
         }
 
 
-    private:
+    public:
 
         std::vector<Component*> components;
 

@@ -12,7 +12,7 @@ class Renderer: public Component
 
         int xSize = 50;
         int ySize = 50;
-
+        std::string path;
         sf::RectangleShape shape;
         sf::Texture texture;
 
@@ -20,7 +20,7 @@ class Renderer: public Component
         void updatePosition();
         void setTexture(sf::Texture* newTexture);
         void loadTexture(std::string imagePath); // loads and automathicaly set it
-
+        std::string writeDown();
         Renderer();
     
     private:

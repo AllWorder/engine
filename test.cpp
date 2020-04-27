@@ -129,7 +129,7 @@ main()
     API::getObject("background") -> getComponent<Renderer>() -> layer = 3;
 
 
-
+    API::saveGame("newSave");
 
     while (gameRun())
     {

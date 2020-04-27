@@ -13,9 +13,10 @@ class Animation: public Component
 
         void addTexture(std::string texturePath);
         void deleteTexture(int textureNum);
+        std::string writeDown();
 
         std::vector<sf::Texture*> textures;
-
+        std::vector<std::string> texturePaths;
         Animation()
         {
             this -> name = typeid(Animation).name();

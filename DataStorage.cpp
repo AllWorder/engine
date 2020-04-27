@@ -1,5 +1,8 @@
 #include "DataStorage.hpp"
 #include "GameObject.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
 
 bool DataStorage::addObject(GameObject& newObject)
 {
@@ -67,3 +70,41 @@ bool DataStorage::createObjectInStorage(std::string name)
     }
 
 }
+
+void DataStorage::save(std::string name)
+{
+  name = "Savings/" + name + ".txt";
+  std::ofstream write;
+  write.open(name.c_str());
+  std::map <std::string, GameObject>::iterator i;
+  std::string dataLine;
+  for (i = objects.begin(); i != objects.end(); i++)
+  {
+    write << "###" << i -> first << '\n';
+    write << (i -> second).x << '\n';
+    write << (i -> second).y << '\n';
+    for (Component* c: (i -> second).components)
+    {  
+      dataLine = c -> writeDown();
+      write << dataLine;
+      fflush(0);
+    }
+  }
+  write.close();
+}
+
+std::string BTS(bool fl)
+{
+  std::string s = "false";
+  if (fl == true)
+    s = "true";
+  return s;
+}
+
+
+
+
+
+
+
+

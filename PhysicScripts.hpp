@@ -15,6 +15,16 @@ class VelocityPhysic: public PhysicScript
             this->name = typeid(VelocityPhysic).name();
         }
 
+        std::string writeDown()
+        {
+          std::string s = "***";
+          s += this -> name;
+          s += '\n';
+          s += BTS(isHasInertion);
+          s += '\n';
+          return s;
+        }
+
         void executePhysic(Singleton* sing)
         {
             if(objPointer ->getComponent<Collider>())
@@ -40,6 +50,14 @@ class GravitationPhysic: public PhysicScript
         GravitationPhysic()
         {
             this->name = typeid(GravitationPhysic).name();
+        }
+
+        std::string writeDown()
+        {
+          std::string s = "***";
+          s += this -> name;
+          s += '\n';
+          return s;
         }
 
         void executePhysic(Singleton* sing)

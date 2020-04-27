@@ -15,6 +15,8 @@ const int SCREEN_Y = 720;
 const int SCREEN_X = 1280;
 const float g = 0.1;
 
+std::string BTS(bool fl);
+
 class GameObject;
 
 class Component
@@ -27,6 +29,8 @@ class Component
         virtual ~Component()
         {           
         }
+        virtual std::string writeDown()
+        {}
 };
 
 class Singleton;

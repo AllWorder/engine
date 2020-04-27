@@ -13,7 +13,7 @@ void Animation::addTexture(std::string texturePath)
             std::cout << "Loading texture erorr" << "\n";
             return;
         }
-
+        texturePaths.push_back(texturePath);
         newTexture -> setSmooth(true);
 
         this->textures.push_back(newTexture);
@@ -23,6 +23,7 @@ void Animation::addTexture(std::string texturePath)
 void Animation::deleteTexture(int textureNum)
 { 
     textures.erase(textures.begin() + textureNum);
+    texturePaths.erase(texturePaths.begin() + textureNum);
 }     
 
 void AnimationConroller::registerAnimation(Component* animation)
@@ -75,3 +76,25 @@ void AnimationConroller::doAllAnimations(Singleton* sing)
         
     }
 }
+
+std::string Animation::writeDown()
+{
+  std::string s = "***Animation";
+  s += '\n';
+  s += std::to_string(ticksPerAnimation);
+  s += '\n';
+  s += std::to_string(currentTick);
+  s += '\n';
+  s += std::to_string(currentTexture);
+  s += '\n';
+  for (std::string path: texturePaths)
+    s += path + '\n';
+  return s;
+}
+
+
+
+
+
+
+
