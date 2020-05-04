@@ -10,7 +10,7 @@ class Script : public Component
   {}
   std::string writeDown()
   {
-    std::string s = "***";
+    std::string s = "@@@";
     s += this -> name;
     s += '\n';
     return s;

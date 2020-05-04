@@ -3,6 +3,7 @@
 #include "Head.hpp"
 #include "GameObject.hpp"
 #include "Renderer.hpp"
+#include "DataStorage.hpp"
 
 void Animation::addTexture(std::string texturePath)
 {
@@ -39,6 +40,12 @@ void AnimationConroller::unregisterAnimation(Component* animation)
     if (c != static_cast<Animation*>(animation))
       i++;
   animations.erase(i);
+}
+
+void AnimationConroller::deleteData()
+{
+  std::vector<Animation*> v = {};
+  animations = v;
 }
 
 void AnimationConroller::doAllAnimations(Singleton* sing)
@@ -92,6 +99,24 @@ std::string Animation::writeDown()
   return s;
 }
 
+void initAnimation(std::string object, Singleton* sing, std::string component)
+{
+  sing -> data -> getObject(object) -> addComponent<Animation>(sing);
+  sing -> data -> getObject(object) -> getComponent<Animation>() -> ticksPerAnimation = std::atoi(component.substr(0, component.find('\n')).c_str());
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Animation>() -> currentTick = std::atoi(component.substr(0, component.find('\n')).c_str()); 
+  component = component.substr(component.find('\n') + 1);
+  
+  sing -> data -> getObject(object) -> getComponent<Animation>() -> currentTexture = std::atoi(component.substr(0, component.find('\n')).c_str());
+  component = component.substr(component.find('\n') + 1);
+
+  while (component.find("...") > 0)
+  {
+    sing -> data -> getObject(object) -> getComponent<Animation>() -> addTexture(component.substr(0, component.find('\n')));
+    component = component.substr(component.find('\n') + 1);
+  }
+}
 
 
 

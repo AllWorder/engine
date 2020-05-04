@@ -10,10 +10,9 @@ bool gameRun()
 
   *(sing -> timer)++;
   //PHISICS: 
-
   sing -> physController -> resolveCollisions(sing -> physController -> findCollisions(), sing);
   sing -> physController -> doAllPhysics(sing);
-
+  
 
   //EVENT HANDLER
 

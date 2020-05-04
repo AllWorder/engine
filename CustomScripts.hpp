@@ -43,4 +43,8 @@ class Monster : public Script
   }
 };
 
+void initScript(std::string name, std::string objName, DataStorage* data, Singleton* sing);
+void initVelocityPhysic(std::string object, Singleton* sing, std::string component);
+void initGravitationPhysic(std::string object, Singleton* sing, std::string component);
+
 #endif

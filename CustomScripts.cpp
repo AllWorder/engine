@@ -10,6 +10,7 @@
 #include "Collider.hpp"
 #include "PhysController.hpp"
 #include "PhysicScripts.hpp"
+
 //#include "API.hpp"
 
 void PlayerController::execute(Singleton* sing)
@@ -68,3 +69,36 @@ void MonsterSpawner::execute(Singleton* sing)
 
   }
 }
+
+void initScript(std::string name, std::string object, DataStorage* data, Singleton* sing)
+{
+  if (name == typeid(PlayerController).name())
+    data -> getObject(object) -> addComponent<PlayerController>(sing);
+  if (name == typeid(MonsterSpawner).name())
+    data -> getObject(object) -> addComponent<MonsterSpawner>(sing);
+  if (name == typeid(Monster).name())
+    data -> getObject(object) -> addComponent<Monster>(sing);
+}
+
+void initVelocityPhysic(std::string object, Singleton* sing, std::string component)
+{
+  sing -> data -> getObject(object) -> addComponent<VelocityPhysic>(sing);
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<VelocityPhysic>() -> isHasInertion = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<VelocityPhysic>() -> isHasInertion = false;
+  component = component.substr(component.find('\n') + 1);
+}
+
+void initGravitationPhysic(std::string object, Singleton* sing, std::string component)
+{
+  sing -> data -> getObject(object) -> addComponent<GravitationPhysic>(sing);
+}
+
+
+
+
+
+
+
+

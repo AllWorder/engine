@@ -33,11 +33,12 @@ class AnimationConroller
         {}
         void registerAnimation(Component* animation);
         void unregisterAnimation(Component* animation);
-        
+        void deleteData();
         void doAllAnimations(Singleton* sing);
 
         std::vector<Animation*> animations;
 
 };
 
+void initAnimation(std::string object, Singleton* sing, std::string component);
 #endif

@@ -8,6 +8,7 @@
 #include "GraphicManager.hpp"
 #include "Singleton.h"
 #include "Script.hpp"
+#include "DataStorage.hpp"
 
 void resolveInelasticHit(std::vector<float> norm, Collider* source, Collider* obj2)
 {
@@ -369,6 +370,56 @@ std::string Collider::writeDown()
   return s;
 }
 
+void initCollider(std::string object, Singleton* sing, std::string component)
+{
+  sing -> data -> getObject(object) -> addComponent<Collider>(sing);
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifMoveable = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifMoveable = false;
+  component = component.substr(component.find('\n') + 1);
+
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifCollideable = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifCollideable = false;
+  component = component.substr(component.find('\n') + 1);
+
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifElastic = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifElastic = false;
+  component = component.substr(component.find('\n') + 1);
+
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifCircle = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.ifCircle = false;
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.mass = std::stof(component.substr(0, component.find('\n')));
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.r = std::stof(component.substr(0, component.find('\n')));
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.velocityS[0] = std::stof(component.substr(0, component.find('\n')));
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Collider>() -> shape.velocityS[1] = std::stof(component.substr(0, component.find('\n')));
+  component = component.substr(component.find('\n') + 1);
+  
+  int x;
+  int y;
+  while (component.find("...") > 0)
+  {
+    x = std::stof(component.substr(0, component.find(' ')));
+    y = std::stof(component.substr(component.find(' ') + 1, component.find('\n')));
+    sing -> data -> getObject(object) -> getComponent<Collider>() ->shape.addVertex(x, y);
+    component = component.substr(component.find('\n') + 1);
+  }
+
+}
 
 
 

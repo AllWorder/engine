@@ -83,6 +83,8 @@ class BWCollided_wall : public BehaviourWhileCollided
   void collisionResolving(Collider* source, Collider* enemy);
 };
 
+void initCollider(std::string object, Singleton* sing, std::string component);
+
 //user writes what happens when one object hits another, using our functions
 
 #endif

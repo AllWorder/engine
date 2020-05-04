@@ -71,13 +71,14 @@ bool DataStorage::createObjectInStorage(std::string name)
 
 }
 
-void DataStorage::save(std::string name)
+void DataStorage::save(std::string name, Singleton* sing)
 {
   name = "Savings/" + name + ".txt";
   std::ofstream write;
   write.open(name.c_str());
   std::map <std::string, GameObject>::iterator i;
   std::string dataLine;
+  write << *(sing -> timer) << '\n';
   for (i = objects.begin(); i != objects.end(); i++)
   {
     write << "###" << i -> first << '\n';
@@ -86,10 +87,13 @@ void DataStorage::save(std::string name)
     for (Component* c: (i -> second).components)
     {  
       dataLine = c -> writeDown();
+      dataLine += "...";
+      dataLine += '\n';
       write << dataLine;
       fflush(0);
     }
   }
+  
   write.close();
 }
 

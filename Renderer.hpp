@@ -27,4 +27,5 @@ class Renderer: public Component
 
 };
 
+void initRenderer(std::string object, Singleton* sing, std::string component);
 #endif

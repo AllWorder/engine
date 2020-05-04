@@ -15,7 +15,7 @@
 #include "Animator.hpp"
 #include "Singleton.h"
 Singleton* sing;
-#include "gameRun.hpp"
+
 
 // for compilation use:
 //g++ test.cpp CustomScripts.cpp DataStorage.cpp GraphicManager.cpp Renderer.cpp ScriptController.cpp Singleton.cpp Collider.cpp PhysController.cpp Animator.cpp -o test -lsfml-graphics -lsfml-window -lsfml-system
@@ -24,7 +24,7 @@ Singleton* sing;
 
 
 #include "API.hpp"
-
+#include "gameRun.hpp"
 main()
 { 
     sing = sing -> getInstance();
@@ -34,7 +34,7 @@ main()
     API::getObject("obj1") -> getComponent<Renderer>()->loadTexture("resources/opexus.png");
     API::getObject("obj1") -> getComponent<Renderer>()->setSize(100, 100);
     API::getObject("obj1") -> addComponent<Collider>(sing);
-    API::getObject("obj1") -> addComponent<BWCollided_player>(sing);
+    
     
     API::getObject("obj1") -> getComponent<Collider>() -> shape.ifCircle = true;
     API::getObject("obj1") -> getComponent<Collider>() -> shape.r = 50;
@@ -51,8 +51,7 @@ main()
 
     API::createObject("wall1");
     API::getObject("wall1") -> addComponent<Collider>(sing);
-    API::getObject("wall1") -> getComponent<Collider>() -> shape.ifMoveable = false;
-    API::getObject("wall1") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall1") -> getComponent<Collider>() -> shape.ifMoveable = false;  
     API::getObject("wall1") -> getComponent<Collider>() -> shape.addVertex(500, -500);
     API::getObject("wall1") -> getComponent<Collider>() -> shape.addVertex(500, 220);
     API::getObject("wall1") -> x = -500;
@@ -61,8 +60,7 @@ main()
     API::createObject("wall2");
     API::getObject("wall2") -> addComponent<Collider>(sing);
     API::getObject("wall2") -> getComponent<Collider>() -> shape.ifMoveable = false;
-    //(data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifElastic = false;
-    API::getObject("wall2") -> addComponent<BWCollided_wall>(sing);
+    //(data.getObject("wall2")) -> getComponent<Collider>() -> shape.ifElastic = false;  
     API::getObject("wall2") -> getComponent<Collider>() -> shape.addVertex(-500, -280);
     API::getObject("wall2") -> getComponent<Collider>() -> shape.addVertex(780, -280);
     API::getObject("wall2") -> x = 500;
@@ -71,7 +69,6 @@ main()
     API::createObject("wall3");
     API::getObject("wall3") -> addComponent<Collider>(sing);
     API::getObject("wall3") -> getComponent<Collider>() -> shape.ifMoveable = false;
-    API::getObject("wall3") -> addComponent<BWCollided_wall>(sing);
     API::getObject("wall3") -> getComponent<Collider>() -> shape.addVertex(-720, 220);
     API::getObject("wall3") -> getComponent<Collider>() -> shape.addVertex(-720, -500);
     API::getObject("wall3") -> x = 2000;
@@ -79,8 +76,7 @@ main()
 
     API::createObject("wall4");
     API::getObject("wall4") -> addComponent<Collider>(sing);
-    API::getObject("wall4") -> getComponent<Collider>() -> shape.ifMoveable = false;
-    API::getObject("wall4") -> addComponent<BWCollided_wall>(sing);
+    API::getObject("wall4") -> getComponent<Collider>() -> shape.ifMoveable = false;    
     API::getObject("wall4") -> getComponent<Collider>() -> shape.addVertex(-500, 500);
     API::getObject("wall4") -> getComponent<Collider>() -> shape.addVertex(780, 500);
     API::getObject("wall4") -> x = 500;
@@ -90,8 +86,7 @@ main()
     API::getObject("obj2") -> addComponent<Renderer>(sing);
     API::getObject("obj2") -> getComponent<Renderer>()->loadTexture("resources/monster.png");
     API::getObject("obj2") -> getComponent<Renderer>()->setSize(100, 100);
-    API::getObject("obj2") -> addComponent<Collider>(sing);
-    API::getObject("obj2") -> addComponent<BWCollided_player>(sing);
+    API::getObject("obj2") -> addComponent<Collider>(sing);    
     API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(-50, -50);
     API::getObject("obj2") -> getComponent<Collider>() -> shape.mass = 0.3;
     API::getObject("obj2") -> getComponent<Collider>() -> shape.addVertex(50, -49);
@@ -130,10 +125,14 @@ main()
 
 
     API::saveGame("newSave");
-
+    API::readGame("newSave");
+    API::saveGame("afterReading");
+    //return 0;
+    
     while (gameRun())
     {
-      //YOUR CODE AND LOGICS HERE
+      if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        API::readGame("newSave");
     }
 
   sing -> deleteInstance();       

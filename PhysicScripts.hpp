@@ -4,6 +4,7 @@
 #include "Head.hpp"
 #include "PhysController.hpp"
 
+
 class VelocityPhysic: public PhysicScript
 {
     public:
@@ -24,6 +25,8 @@ class VelocityPhysic: public PhysicScript
           s += '\n';
           return s;
         }
+
+        
 
         void executePhysic(Singleton* sing)
         {
@@ -60,6 +63,8 @@ class GravitationPhysic: public PhysicScript
           return s;
         }
 
+        
+
         void executePhysic(Singleton* sing)
         {
             if(objPointer ->getComponent<Collider>())
@@ -68,5 +73,8 @@ class GravitationPhysic: public PhysicScript
             }
         }
 };
+
+
+
 
 #endif

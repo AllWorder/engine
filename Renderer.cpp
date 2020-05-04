@@ -6,6 +6,7 @@
 #include "Singleton.h"
 #include "Script.hpp"
 #include "CustomScripts.hpp"
+#include "DataStorage.hpp"
 
 Renderer::Renderer()
 {
@@ -57,5 +58,33 @@ std::string Renderer::writeDown()
   s += '\n';
   return s;
 }
+
+void initRenderer(std::string object, Singleton* sing, std::string component)
+{
+  sing -> data -> getObject(object) -> addComponent<Renderer>(sing);
+
+  if (component.substr(0, component.find('\n')) == "true")
+    sing -> data -> getObject(object) -> getComponent<Renderer>() -> isVisible = true;
+  else
+    sing -> data -> getObject(object) -> getComponent<Renderer>() -> isVisible = false;
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Renderer>() -> layer = std::atoi(component.substr(0, component.find('\n')).c_str());
+  component = component.substr(component.find('\n') + 1);
+
+  int xSize = std::atoi(component.substr(0, component.find('\n')).c_str());
+  component = component.substr(component.find('\n') + 1);
+  
+  int ySize = std::atoi(component.substr(0, component.find('\n')).c_str());
+  component = component.substr(component.find('\n') + 1);
+
+  sing -> data -> getObject(object) -> getComponent<Renderer>() -> loadTexture(component.substr(0, component.find('\n')));
+  sing -> data -> getObject(object) -> getComponent<Renderer>() -> setSize(xSize, ySize);
+  component = component.substr(component.find('\n') + 1);
+  
+}
+
+
+
 
 

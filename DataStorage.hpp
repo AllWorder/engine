@@ -17,7 +17,7 @@ class DataStorage
 
         bool createObjectInStorage(std::string name);
        
-        void save(std::string name);
+        void save(std::string name, Singleton* sing);
    
         void read(std::string name);
 
